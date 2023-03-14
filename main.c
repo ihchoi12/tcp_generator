@@ -14,6 +14,7 @@
 
 // Application parameters
 uint64_t rate;
+uint32_t seed;
 uint64_t duration;
 uint64_t nr_flows;
 uint64_t nr_queues;
@@ -39,7 +40,7 @@ volatile uint8_t quit_tx = 0;
 volatile uint32_t ack_dup = 0;
 volatile uint32_t ack_empty = 0;
 volatile uint8_t quit_rx_ring = 0;
-volatile uint64_t nr_never_sent = 0;
+volatile uint64_t *nr_never_sent = 0;
 lcore_param lcore_params[RTE_MAX_LCORE];
 struct rte_ring *rx_rings[RTE_MAX_LCORE];
 
@@ -102,6 +103,9 @@ int process_rx_pkt(struct rte_mbuf *pkt, node_t *incoming, uint64_t *incoming_id
 	node_t *node = &incoming[(*incoming_idx)++];
 	node->timestamp_tx = t0;
 	node->timestamp_rx = t1;
+
+	// node->flow_id = payload[2];
+	// node->thread_id = payload[3];
 
 	return 1;
 }
@@ -194,7 +198,7 @@ static int lcore_rx_ring(void *arg) {
 		// retrieve packets from the RX core
 		nb_rx = rte_ring_sc_dequeue_burst(rx_ring, (void**) pkts, BURST_SIZE, NULL); 
 		for(int i = 0; i < nb_rx; i++) {
-			rte_prefetch_non_temporal(rte_pktmbuf_mtod(pkts[i], void *));
+			// rte_prefetch_non_temporal(rte_pktmbuf_mtod(pkts[i], void *));
 			// process the incoming packet
 			process_rx_pkt(pkts[i], incoming, incoming_idx);
 			// free the packet
@@ -206,7 +210,7 @@ static int lcore_rx_ring(void *arg) {
 	do{
 		nb_rx = rte_ring_sc_dequeue_burst(rx_ring, (void**) pkts, BURST_SIZE, NULL);
 		for(int i = 0; i < nb_rx; i++) {
-			rte_prefetch_non_temporal(rte_pktmbuf_mtod(pkts[i], void *));
+			// rte_prefetch_non_temporal(rte_pktmbuf_mtod(pkts[i], void *));
 			// process the incoming packet
 			process_rx_pkt(pkts[i], incoming, incoming_idx);
 			// free the packet
@@ -225,6 +229,7 @@ static int lcore_rx(void *arg) {
 
 	uint64_t now;
 	uint16_t nb_rx;
+	uint16_t nb_pkts;
 	struct rte_mbuf *pkts[BURST_SIZE];
 	struct rte_ring *rx_ring = rx_rings[qid];
 	
@@ -238,7 +243,10 @@ static int lcore_rx(void *arg) {
 			// fill the timestamp into packet payload
 			fill_payload_pkt(pkts[i], 1, now);
 		}
-		if(rte_ring_sp_enqueue_burst(rx_ring, (void* const*) pkts, nb_rx, NULL) != nb_rx) {
+
+		// enqueue the packets to the ring
+		nb_pkts = rte_ring_sp_enqueue_burst(rx_ring, (void* const*) pkts, nb_rx, NULL);
+		if(unlikely(nb_pkts != nb_rx)) {
 			rte_exit(EXIT_FAILURE, "Cannot enqueue the packet to the RX thread: %s.\n", rte_strerror(errno));
 		}
 	}
@@ -253,63 +261,46 @@ static int lcore_tx(void *arg) {
 	uint8_t qid = tx_conf->qid;
 	uint64_t nr_elements = tx_conf->nr_elements;
 
-	uint64_t i = 0;
-	uint16_t n = 1;
-	uint16_t nb_tx;
-	uint16_t nb_pkts = 0;
 	struct rte_mbuf *pkts[BURST_SIZE];
 	uint16_t *flow_indexes = flow_indexes_array[qid];
 	uint64_t *interarrival_gap = interarrival_array[qid];
-	uint64_t next_tsc = rte_rdtsc() + interarrival_gap[i];
+	uint64_t next_tsc = rte_rdtsc() + interarrival_gap[0];
 
-	while(!quit_tx) { 
-		// reach the limit
-		if(unlikely(i >= nr_elements)) {
-			break;
+	for(uint64_t i = 0; i < nr_elements; i++) {
+		// unable to keep up with the requested rate
+		if(unlikely(rte_rdtsc() > (next_tsc + 5*TICKS_PER_US))) {
+			// count this batch as dropped
+			nr_never_sent[qid]++;
+			next_tsc += (interarrival_gap[i] + 2*TICKS_PER_US);
+			continue;
 		}
 
 		// choose the flow to send
 		uint16_t flow_id = flow_indexes[i];
 		tcp_control_block_t *block = &tcp_control_blocks[flow_id];
 
-		// generate packets
-		for(; nb_pkts < n; nb_pkts++) {
-			pkts[nb_pkts] = rte_pktmbuf_alloc(pktmbuf_pool);
-			// fill the packet with the flow information
-			fill_tcp_packet(flow_id, pkts[nb_pkts]);
-		}
+		// get the packet
+		pkts[0] = rte_pktmbuf_alloc(pktmbuf_pool);
+		fill_tcp_packet(block, pkts[0]);
 
-		// check receive window for that flow
-		uint16_t rx_wnd = rte_atomic16_read(&block->tcb_rwin);
-		while(unlikely(rx_wnd < tcp_payload_size)) { 
-			rx_wnd = rte_atomic16_read(&block->tcb_rwin);
-		}
-
-		// unable to keep up with the requested rate
-		if(unlikely(rte_rdtsc() > (next_tsc + 5*TICKS_PER_US))) {
-			// count this batch as dropped
-			nr_never_sent++;
-			next_tsc += interarrival_gap[i++];
-			continue;
-		}
+		// check the receive window for this flow
+		// uint16_t rx_wnd = rte_atomic16_read(&block->tcb_rwin);
+		// while(unlikely(rx_wnd < tcp_payload_size)) { 
+		// 	rx_wnd = rte_atomic16_read(&block->tcb_rwin);
+		// }
 
 		// fill the timestamp into the packet payload
-		for(int j = 0; j < nb_pkts; j++) {
-			fill_payload_pkt(pkts[j], 0, next_tsc);
-		}
+		fill_payload_pkt(pkts[0], 0, next_tsc);
+		fill_payload_pkt(pkts[0], 2, flow_id);
 
 		// sleep for while
 		while (rte_rdtsc() < next_tsc) {  }
 
-		// send the batch
-		nb_tx = rte_eth_tx_burst(portid, qid, pkts, nb_pkts);
-		if(unlikely(nb_tx != nb_pkts)) {
-			rte_exit(EXIT_FAILURE, "Cannot send the target packets.\n");
-		}
+		// send the packet
+		rte_eth_tx_burst(portid, qid, pkts, 1);
 
 		// update the counter
-		nb_pkts = 0;
-		next_tsc += interarrival_gap[i++];
+		next_tsc += interarrival_gap[i];
 	}
 
 	return 0;
@@ -333,7 +324,7 @@ int main(int argc, char **argv) {
 
 	// initialize DPDK
 	uint16_t portid = 0;
-	init_DPDK(portid, nr_queues);
+	init_DPDK(portid, nr_queues, seed);
 
 	// allocate nodes for incoming packets
 	allocate_incoming_nodes();
@@ -379,6 +370,10 @@ int main(int argc, char **argv) {
 		if(rte_eal_wait_lcore(lcore_id) < 0) {
 			return -1;
 		}
+	}
+
+	for(int i = 0; i < nr_queues; i++) {
+		printf("never_sent[%d]: %lu\n", i, nr_never_sent[i]);
 	}
 
 	// print stats

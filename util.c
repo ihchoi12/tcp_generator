@@ -58,13 +58,20 @@ void create_interarrival_array() {
 	
 	uint64_t nr_elements_per_queue = 2 * rate_per_queue * duration;
 
-	interarrival_array = (uint64_t**) malloc(nr_queues * sizeof(uint64_t*));
+	interarrival_array = (uint64_t**) rte_malloc(NULL, nr_queues * sizeof(uint64_t*), 64);
 	if(interarrival_array == NULL) {
 		rte_exit(EXIT_FAILURE, "Cannot alloc the interarrival_gap array.\n");
 	}
 
+	nr_never_sent = (uint64_t*) rte_malloc(NULL, nr_queues * sizeof(uint64_t), 64);
+	if(nr_never_sent == NULL) {
+		rte_exit(EXIT_FAILURE, "Cannot alloc the nr_never_sent array.\n");
+	}
+
 	for(uint64_t i = 0; i < nr_queues; i++) {
-		interarrival_array[i] = (uint64_t*) malloc(nr_elements_per_queue * sizeof(uint64_t));
+		nr_never_sent[i] = 0;
+
+		interarrival_array[i] = (uint64_t*) rte_malloc(NULL, nr_elements_per_queue * sizeof(uint64_t), 64);
 		if(interarrival_array[i] == NULL) {
 			rte_exit(EXIT_FAILURE, "Cannot alloc the interarrival_gap array.\n");
 		}
@@ -88,13 +95,13 @@ void create_flow_indexes_array() {
 	uint64_t rate_per_queue = rate/nr_queues;
 	uint64_t nr_elements_per_queue = 2 * rate_per_queue * duration;
 
-	flow_indexes_array = (uint16_t**) malloc(nr_queues * sizeof(uint16_t*));
+	flow_indexes_array = (uint16_t**) rte_malloc(NULL, nr_queues * sizeof(uint16_t*), 64);
 	if(flow_indexes_array == NULL) {
 		rte_exit(EXIT_FAILURE, "Cannot alloc the flow_indexes array.\n");
 	}
 
 	for(uint64_t i = 0; i < nr_queues; i++) {
-		flow_indexes_array[i] = (uint16_t*) malloc(nr_elements_per_queue * sizeof(uint16_t));
+		flow_indexes_array[i] = (uint16_t*) rte_malloc(NULL, nr_elements_per_queue * sizeof(uint16_t), 64);
 		if(flow_indexes_array[i] == NULL) {
 			rte_exit(EXIT_FAILURE, "Cannot alloc the flow_indexes array.\n");
 		}
@@ -109,8 +116,8 @@ void create_flow_indexes_array() {
 void clean_heap() {
 	free(incoming_array);
 	free(incoming_idx_array);
-	free(flow_indexes_array);
-	free(interarrival_array);
+	rte_free(flow_indexes_array);
+	rte_free(interarrival_array);
 }
 
 // Usage message
@@ -119,9 +126,11 @@ static void usage(const char *prgname) {
 		"  -d DISTRIBUTION: <uniform|exponential>\n"
 		"  -r RATE: rate in pps\n"
 		"  -f FLOWS: number of flows\n"
-		"  -q QUEUES: number of queues\n"
 		"  -s SIZE: frame size in bytes\n"
 		"  -t TIME: time in seconds to send packets\n"
+		"  -q QUEUES: number of queues\n"
+		"  -e SEED: seed\n"
+		"  -n SERVERS: number of servers\n"
 		"  -c FILENAME: name of the configuration file\n"
 		"  -o FILENAME: name of the output file\n",
 		prgname
@@ -135,7 +144,7 @@ int app_parse_args(int argc, char **argv) {
 	char *prgname = argv[0];
 
 	argvopt = argv;
-	while ((opt = getopt(argc, argvopt, "d:r:f:s:q:p:t:c:o:")) != EOF) {
+	while ((opt = getopt(argc, argvopt, "d:r:f:s:q:p:t:c:o:e:n:")) != EOF) {
 		switch (opt) {
 		// distribution
 		case 'd':
@@ -170,15 +179,25 @@ int app_parse_args(int argc, char **argv) {
 			tcp_payload_size = (frame_size - sizeof(struct rte_ether_hdr) - sizeof(struct rte_ipv4_hdr) - sizeof(struct rte_tcp_hdr));
 			break;
 
+		// duration (s)
+		case 't':
+			duration = process_int_arg(optarg);
+			break;
+		
 		// queues
 		case 'q':
 			nr_queues = process_int_arg(optarg);
 			min_lcores = 3 * nr_queues + 1;
 			break;
 
-		// duration (s)
-		case 't':
-			duration = process_int_arg(optarg);
+		// seed
+		case 'e':
+			seed = process_int_arg(optarg);
+			break;
+
+		// number of servers
+		case 'n':
+			nr_servers = process_int_arg(optarg);
 			break;
 
 		// config file name
@@ -213,12 +232,10 @@ int app_parse_args(int argc, char **argv) {
 
 // Wait for the duration parameter
 void wait_timeout() {
-	uint64_t t0 = rte_rdtsc();
-	while((rte_rdtsc() - t0) < (2 * duration * 1000000 * TICKS_PER_US)) { }
-
-	// wait for remaining
-	t0 = rte_rdtsc_precise();
-	while((rte_rdtsc() - t0) < (5 * 1000000 * TICKS_PER_US)) { }
+	uint32_t remaining_in_s = 5;
+	rte_delay_us_sleep((2 * duration + remaining_in_s) * 1000000);
+	// uint64_t t0 = rte_rdtsc();
+	// while((rte_rdtsc() - t0) < ((2 * duration + remaining_in_s) * 1000000 * TICKS_PER_US)) { }
 
 	// set quit flag for all internal cores
 	quit_rx = 1;
@@ -242,20 +259,26 @@ void print_stats_output() {
 		rte_exit(EXIT_FAILURE, "Cannot open the output file.\n");
 	}
 
+	uint32_t idx_per_queue = (rate * duration)/nr_queues;
+
 	for(uint32_t i = 0; i < nr_queues; i++) {
 		// get the pointers
 		node_t *incoming = incoming_array[i];
 		uint32_t incoming_idx = incoming_idx_array[i];
+		uint32_t never_sent = nr_never_sent[i];
 
-		// drop the first 50% packets for warming up
-		uint64_t j = 0.5 * incoming_idx;
+		// get the last RATE * DURATION packets considering the 'nr_never_sent' packets
+		printf("incoming_idx = %d -- idx_per_queue = %d -- never_sent = %d\n", incoming_idx, idx_per_queue, never_sent);
+		uint64_t j = incoming_idx - idx_per_queue;
 
 		// print the RTT latency in (ns)
 		node_t *cur;
 		for(; j < incoming_idx; j++) {
 			cur = &incoming[j];
 
-			fprintf(fp, "%lu\n", ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000))));
+			fprintf(fp, "%lu\n", 
+				((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000)))
+			);
 		}
 	}
 
@@ -301,14 +324,6 @@ void process_config_file(char *cfg_file) {
 		uint16_t port;
 		sscanf(entry, "%hu", &port);
 		dst_tcp_port = port;
-	}
-
-	// local server info
-	entry = (char*) rte_cfgfile_get_entry(file, "server", "nr_servers");
-	if(entry) {
-		uint16_t n;
-		sscanf(entry, "%hu", &n);
-		nr_servers = n;
 	}
 
 	// close the file

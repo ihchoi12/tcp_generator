@@ -42,10 +42,10 @@ typedef struct timestamp_node_t {
 	uint64_t ack_empty;
 	uint64_t timestamp_rx;
 	uint64_t timestamp_tx;
-	uint64_t nr_never_sent;
 } node_t;
 
 extern uint64_t rate;
+extern uint32_t seed;
 extern uint16_t portid;
 extern uint64_t duration;
 extern uint64_t nr_flows;
@@ -58,6 +58,8 @@ extern uint32_t tcp_payload_size;
 extern uint64_t TICKS_PER_US;
 extern uint16_t **flow_indexes_array;
 extern uint64_t **interarrival_array;
+extern volatile uint64_t *nr_never_sent;
+extern struct rte_mempool *pktmbuf_pool;
 
 extern uint16_t dst_tcp_port;
 extern uint32_t dst_ipv4_addr;

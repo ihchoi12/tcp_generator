@@ -21,12 +21,12 @@
 #include "tcp_util.h"
 
 #define SEED				        7
-#define BURST_SIZE    			    64
+#define BURST_SIZE    			    32
 #define RING_ELEMENTS			    512*1024
 #define MEMPOOL_CACHE_SIZE 		    512
 #define MAX_RTE_FLOW_PATTERN 		4
 #define MAX_RTE_FLOW_ACTIONS 		4
-#define PKTMBUF_POOL_ELEMENTS		512*1024 - 1
+#define PKTMBUF_POOL_ELEMENTS		8*1024*1024 - 1
 #define RTE_LOGTYPE_TCP_GENERATOR 	RTE_LOGTYPE_USER1
 
 extern uint32_t min_lcores;
@@ -38,7 +38,7 @@ extern tcp_control_block_t *tcp_control_blocks;
 void clean_hugepages();
 void print_DPDK_stats();
 void insert_flow(uint16_t portid, uint32_t i);
-void init_DPDK(uint16_t portid, uint64_t nr_queues);
+void init_DPDK(uint16_t portid, uint64_t nr_queues, uint32_t seed);
 void create_dpdk_rings();
 int init_DPDK_port(uint16_t portid, uint16_t nb_rx_queue, uint16_t nb_tx_queue, struct rte_mempool *mbuf_pool);
 

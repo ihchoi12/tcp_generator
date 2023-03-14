@@ -1,7 +1,7 @@
 #include "dpdk_util.h"
 
 // Initialize DPDK configuration
-void init_DPDK(uint16_t portid, uint64_t nr_queues) {
+void init_DPDK(uint16_t portid, uint64_t nr_queues, uint32_t seed) {
 	// check the number of DPDK logical cores
 	if(rte_lcore_count() < min_lcores) {
 		rte_exit(EXIT_FAILURE, "No available worker cores!\n");
@@ -38,8 +38,8 @@ void init_DPDK(uint16_t portid, uint64_t nr_queues) {
 // Initialize the DPDK port
 int init_DPDK_port(uint16_t portid, uint16_t nb_rx_queue, uint16_t nb_tx_queue, struct rte_mempool *mbuf_pool) {
 	// configurable number of RX/TX ring descriptors
-	uint16_t nb_rxd = 4096;
-	uint16_t nb_txd = 4096;
+	uint16_t nb_rxd = 256;
+	uint16_t nb_txd = 1024;
 
 	// get default port_conf
 	struct rte_eth_conf port_conf = {

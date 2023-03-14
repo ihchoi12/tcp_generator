@@ -213,10 +213,7 @@ struct rte_mbuf* process_syn_ack_packet(struct rte_mbuf* pkt) {
 }
 
 // Fill the TCP packets from TCP Control Block data
-void fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt) {
-	// get control block for the flow
-	tcp_control_block_t *block = &tcp_control_blocks[i];
-
+void fill_tcp_packet(tcp_control_block_t *block, struct rte_mbuf *pkt) {
 	// ensure that IP/TCP checksum offloadings
 	pkt->ol_flags |= (RTE_MBUF_F_TX_IPV4 | RTE_MBUF_F_TX_IP_CKSUM | RTE_MBUF_F_TX_TCP_CKSUM);
 
@@ -267,8 +264,8 @@ void fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt) {
 }
 
 // Fill the payload of the TCP packet
-void fill_tcp_payload(uint8_t *payload, uint32_t length) {
+inline void fill_tcp_payload(uint8_t *payload, uint32_t length) {
 	for(uint32_t i = 0; i < length; i++) {
-		payload[i] = 'A';
+		payload[i] = rte_rand();
 	}
 }
