@@ -1,0 +1,1203 @@
+# started on Wed Mar 15 20:30:52 2023
+
+#           time CPU                    counts unit events
+     1.000507482 CPU19               55988189      cache-references                                              (41.23%)
+     1.000507482 CPU21                  29098      cache-references                                              (41.23%)
+     1.000507482 CPU23                  29535      cache-references                                              (41.23%)
+     1.000507482 CPU19               16380671      cache-misses              #   29.257 % of all cache refs      (49.62%)
+     1.000507482 CPU21                   2915      cache-misses              #   10.018 % of all cache refs      (49.62%)
+     1.000507482 CPU23                   2901      cache-misses              #    9.822 % of all cache refs      (49.62%)
+     1.000507482 CPU19             1370308903      cycles                                                        (58.02%)
+     1.000507482 CPU21                5838472      cycles                                                        (58.02%)
+     1.000507482 CPU23                5852119      cycles                                                        (58.02%)
+     1.000507482 CPU19              788513109      instructions              #    0.58  insn per cycle           (66.42%)
+     1.000507482 CPU21                1988777      instructions              #    0.34  insn per cycle           (66.42%)
+     1.000507482 CPU23                1988284      instructions              #    0.34  insn per cycle           (66.42%)
+     1.000507482 CPU19              195215428      L1-dcache-loads                                               (66.42%)
+     1.000507482 CPU21                 531680      L1-dcache-loads                                               (66.42%)
+     1.000507482 CPU23                 532005      L1-dcache-loads                                               (66.42%)
+     1.000507482 CPU19               62271393      L1-dcache-load-misses     #   31.90% of all L1-dcache hits    (66.42%)
+     1.000507482 CPU21                   6272      L1-dcache-load-misses     #    1.18% of all L1-dcache hits    (66.42%)
+     1.000507482 CPU23                   5680      L1-dcache-load-misses     #    1.07% of all L1-dcache hits    (66.42%)
+     1.000507482 CPU19                 636548      LLC-loads                                                     (66.47%)
+     1.000507482 CPU21                   3373      LLC-loads                                                     (66.47%)
+     1.000507482 CPU23                   3352      LLC-loads                                                     (66.47%)
+     1.000507482 CPU19                 240577      LLC-load-misses           #   37.79% of all LL-cache hits     (66.87%)
+     1.000507482 CPU21                    239      LLC-load-misses           #    7.09% of all LL-cache hits     (66.87%)
+     1.000507482 CPU23                    158      LLC-load-misses           #    4.71% of all LL-cache hits     (66.86%)
+     1.000507482 CPU19        <not supported>      L1-icache-loads                                             
+     1.000507482 CPU21        <not supported>      L1-icache-loads                                             
+     1.000507482 CPU23        <not supported>      L1-icache-loads                                             
+     1.000507482 CPU19                6335027      L1-icache-load-misses                                         (33.59%)
+     1.000507482 CPU21                  31848      L1-icache-load-misses                                         (33.59%)
+     1.000507482 CPU23                  31658      L1-icache-load-misses                                         (33.59%)
+     1.000507482 CPU19              165867626      dTLB-loads                                                    (33.59%)
+     1.000507482 CPU21                 553898      dTLB-loads                                                    (33.59%)
+     1.000507482 CPU23                 553036      dTLB-loads                                                    (33.59%)
+     1.000507482 CPU19                  24169      dTLB-load-misses          #    0.01% of all dTLB cache hits   (33.54%)
+     1.000507482 CPU21                    435      dTLB-load-misses          #    0.08% of all dTLB cache hits   (33.54%)
+     1.000507482 CPU23                    468      dTLB-load-misses          #    0.08% of all dTLB cache hits   (33.54%)
+     1.000507482 CPU19        <not supported>      iTLB-loads                                                  
+     1.000507482 CPU21        <not supported>      iTLB-loads                                                  
+     1.000507482 CPU23        <not supported>      iTLB-loads                                                  
+     1.000507482 CPU19                  32058      iTLB-load-misses                                              (33.14%)
+     1.000507482 CPU21                   1025      iTLB-load-misses                                              (33.14%)
+     1.000507482 CPU23                   1010      iTLB-load-misses                                              (33.14%)
+     1.000507482 CPU19        <not supported>      L1-dcache-prefetches                                        
+     1.000507482 CPU21        <not supported>      L1-dcache-prefetches                                        
+     1.000507482 CPU23        <not supported>      L1-dcache-prefetches                                        
+     1.000507482 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     1.000507482 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     1.000507482 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     2.001580808 CPU19                 360870      cache-references                                              (41.26%)
+     2.001580808 CPU21                   8126      cache-references                                              (41.26%)
+     2.001580808 CPU23                   6257      cache-references                                              (41.26%)
+     2.001580808 CPU19                 259684      cache-misses              #    0.922 % of all cache refs      (49.65%)
+     2.001580808 CPU21                  21438      cache-misses              #  115.184 % of all cache refs      (49.65%)
+     2.001580808 CPU23                    567      cache-misses              #    3.168 % of all cache refs      (49.65%)
+     2.001580808 CPU19              927105756      cycles                                                        (58.04%)
+     2.001580808 CPU21              861407042      cycles                                                        (58.04%)
+     2.001580808 CPU23                4990486      cycles                                                        (58.04%)
+     2.001580808 CPU19              179130131      instructions              #    0.16  insn per cycle           (66.43%)
+     2.001580808 CPU21             2831065736      instructions              #    6.53  insn per cycle           (66.43%)
+     2.001580808 CPU23                2027902      instructions              #    0.37  insn per cycle           (66.43%)
+     2.001580808 CPU19               41233890      L1-dcache-loads                                               (66.44%)
+     2.001580808 CPU21              884641150      L1-dcache-loads                                               (66.44%)
+     2.001580808 CPU23                 538932      L1-dcache-loads                                               (66.44%)
+     2.001580808 CPU19                1516759      L1-dcache-load-misses     #    1.28% of all L1-dcache hits    (66.78%)
+     2.001580808 CPU21                  19530      L1-dcache-load-misses     #    0.00% of all L1-dcache hits    (66.78%)
+     2.001580808 CPU23                   5133      L1-dcache-load-misses     #    0.96% of all L1-dcache hits    (66.78%)
+     2.001580808 CPU19                  92895      LLC-loads                                                     (67.13%)
+     2.001580808 CPU21                   4312      LLC-loads                                                     (67.13%)
+     2.001580808 CPU23                   2915      LLC-loads                                                     (67.13%)
+     2.001580808 CPU19                  17480      LLC-load-misses           #    4.79% of all LL-cache hits     (67.13%)
+     2.001580808 CPU21                    825      LLC-load-misses           #   21.47% of all LL-cache hits     (67.13%)
+     2.001580808 CPU23                     78      LLC-load-misses           #    2.49% of all LL-cache hits     (67.13%)
+     2.001580808 CPU19        <not supported>      L1-icache-loads                                             
+     2.001580808 CPU21        <not supported>      L1-icache-loads                                             
+     2.001580808 CPU23        <not supported>      L1-icache-loads                                             
+     2.001580808 CPU19                 508920      L1-icache-load-misses                                         (33.56%)
+     2.001580808 CPU21                  38027      L1-icache-load-misses                                         (33.56%)
+     2.001580808 CPU23                  34083      L1-icache-load-misses                                         (33.56%)
+     2.001580808 CPU19               40346058      dTLB-loads                                                    (33.22%)
+     2.001580808 CPU21              918008469      dTLB-loads                                                    (33.22%)
+     2.001580808 CPU23                 542523      dTLB-loads                                                    (33.22%)
+     2.001580808 CPU19                    955      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.87%)
+     2.001580808 CPU21                   1554      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.87%)
+     2.001580808 CPU23                    139      dTLB-load-misses          #    0.03% of all dTLB cache hits   (32.87%)
+     2.001580808 CPU19        <not supported>      iTLB-loads                                                  
+     2.001580808 CPU21        <not supported>      iTLB-loads                                                  
+     2.001580808 CPU23        <not supported>      iTLB-loads                                                  
+     2.001580808 CPU19                   2537      iTLB-load-misses                                              (32.87%)
+     2.001580808 CPU21                    842      iTLB-load-misses                                              (32.87%)
+     2.001580808 CPU23                    651      iTLB-load-misses                                              (32.87%)
+     2.001580808 CPU19        <not supported>      L1-dcache-prefetches                                        
+     2.001580808 CPU21        <not supported>      L1-dcache-prefetches                                        
+     2.001580808 CPU23        <not supported>      L1-dcache-prefetches                                        
+     2.001580808 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     2.001580808 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     2.001580808 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     3.001981819 CPU19                  10645      cache-references                                              (41.54%)
+     3.001981819 CPU21                   4477      cache-references                                              (41.54%)
+     3.001981819 CPU23                   5452      cache-references                                              (41.54%)
+     3.001981819 CPU19                   2733      cache-misses              #    0.015 % of all cache refs      (49.93%)
+     3.001981819 CPU21                    474      cache-misses              #    3.410 % of all cache refs      (49.93%)
+     3.001981819 CPU23                    516      cache-misses              #    3.753 % of all cache refs      (49.93%)
+     3.001981819 CPU19             2392241065      cycles                                                        (58.33%)
+     3.001981819 CPU21             2392255011      cycles                                                        (58.33%)
+     3.001981819 CPU23                5718206      cycles                                                        (58.33%)
+     3.001981819 CPU19              208328874      instructions              #    0.13  insn per cycle           (66.73%)
+     3.001981819 CPU21             7966085207      instructions              #    7.33  insn per cycle           (66.73%)
+     3.001981819 CPU23                1979751      instructions              #    0.36  insn per cycle           (66.73%)
+     3.001981819 CPU19               52133536      L1-dcache-loads                                               (67.12%)
+     3.001981819 CPU21             2491989755      L1-dcache-loads                                               (67.12%)
+     3.001981819 CPU23                 525947      L1-dcache-loads                                               (67.12%)
+     3.001981819 CPU19                  23422      L1-dcache-load-misses     #    0.02% of all L1-dcache hits    (67.18%)
+     3.001981819 CPU21                  10185      L1-dcache-load-misses     #    0.00% of all L1-dcache hits    (67.18%)
+     3.001981819 CPU23                   4255      L1-dcache-load-misses     #    0.80% of all L1-dcache hits    (67.18%)
+     3.001981819 CPU19                  10797      LLC-loads                                                     (67.18%)
+     3.001981819 CPU21                   3662      LLC-loads                                                     (67.18%)
+     3.001981819 CPU23                   2261      LLC-loads                                                     (67.18%)
+     3.001981819 CPU19                   5059      LLC-load-misses           #    2.05% of all LL-cache hits     (66.86%)
+     3.001981819 CPU21                     67      LLC-load-misses           #    1.77% of all LL-cache hits     (66.86%)
+     3.001981819 CPU23                     67      LLC-load-misses           #    2.36% of all LL-cache hits     (66.86%)
+     3.001981819 CPU19        <not supported>      L1-icache-loads                                             
+     3.001981819 CPU21        <not supported>      L1-icache-loads                                             
+     3.001981819 CPU23        <not supported>      L1-icache-loads                                             
+     3.001981819 CPU19                  30117      L1-icache-load-misses                                         (32.88%)
+     3.001981819 CPU21                  44689      L1-icache-load-misses                                         (32.88%)
+     3.001981819 CPU23                  31726      L1-icache-load-misses                                         (32.88%)
+     3.001981819 CPU19               51954551      dTLB-loads                                                    (32.83%)
+     3.001981819 CPU21             2494134833      dTLB-loads                                                    (32.83%)
+     3.001981819 CPU23                 532583      dTLB-loads                                                    (32.83%)
+     3.001981819 CPU19                    106      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.83%)
+     3.001981819 CPU21                   1428      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.83%)
+     3.001981819 CPU23                     76      dTLB-load-misses          #    0.01% of all dTLB cache hits   (32.83%)
+     3.001981819 CPU19        <not supported>      iTLB-loads                                                  
+     3.001981819 CPU21        <not supported>      iTLB-loads                                                  
+     3.001981819 CPU23        <not supported>      iTLB-loads                                                  
+     3.001981819 CPU19                     21      iTLB-load-misses                                              (33.13%)
+     3.001981819 CPU21                    905      iTLB-load-misses                                              (33.13%)
+     3.001981819 CPU23                    639      iTLB-load-misses                                              (33.13%)
+     3.001981819 CPU19        <not supported>      L1-dcache-prefetches                                        
+     3.001981819 CPU21        <not supported>      L1-dcache-prefetches                                        
+     3.001981819 CPU23        <not supported>      L1-dcache-prefetches                                        
+     3.001981819 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     3.001981819 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     3.001981819 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     4.002351088 CPU19                  12078      cache-references                                              (41.98%)
+     4.002351088 CPU21                   4082      cache-references                                              (41.98%)
+     4.002351088 CPU23                   4777      cache-references                                              (41.98%)
+     4.002351088 CPU19                   4176      cache-misses              #    0.030 % of all cache refs      (50.38%)
+     4.002351088 CPU21                    121      cache-misses              #    1.057 % of all cache refs      (50.38%)
+     4.002351088 CPU23                    269      cache-misses              #    2.338 % of all cache refs      (50.38%)
+     4.002351088 CPU19             2392190961      cycles                                                        (58.78%)
+     4.002351088 CPU21             2392220910      cycles                                                        (58.78%)
+     4.002351088 CPU23                5572648      cycles                                                        (58.78%)
+     4.002351088 CPU19              207464251      instructions              #    0.12  insn per cycle           (67.18%)
+     4.002351088 CPU21             8114595820      instructions              #    5.74  insn per cycle           (67.18%)
+     4.002351088 CPU23                1950286      instructions              #    0.35  insn per cycle           (67.18%)
+     4.002351088 CPU19               51939351      L1-dcache-loads                                               (67.18%)
+     4.002351088 CPU21             2537988101      L1-dcache-loads                                               (67.18%)
+     4.002351088 CPU23                 520367      L1-dcache-loads                                               (67.18%)
+     4.002351088 CPU19                  10267      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.90%)
+     4.002351088 CPU21                   5342      L1-dcache-load-misses     #    0.00% of all L1-dcache hits    (66.90%)
+     4.002351088 CPU23                   4402      L1-dcache-load-misses     #    0.83% of all L1-dcache hits    (66.90%)
+     4.002351088 CPU19                   2652      LLC-loads                                                     (66.50%)
+     4.002351088 CPU21                   1876      LLC-loads                                                     (66.50%)
+     4.002351088 CPU23                   2351      LLC-loads                                                     (66.50%)
+     4.002351088 CPU19                    308      LLC-load-misses           #    0.17% of all LL-cache hits     (66.41%)
+     4.002351088 CPU21                    106      LLC-load-misses           #    3.21% of all LL-cache hits     (66.41%)
+     4.002351088 CPU23                    201      LLC-load-misses           #    7.39% of all LL-cache hits     (66.41%)
+     4.002351088 CPU19        <not supported>      L1-icache-loads                                             
+     4.002351088 CPU21        <not supported>      L1-icache-loads                                             
+     4.002351088 CPU23        <not supported>      L1-icache-loads                                             
+     4.002351088 CPU19                  30037      L1-icache-load-misses                                         (32.83%)
+     4.002351088 CPU21                  40282      L1-icache-load-misses                                         (32.83%)
+     4.002351088 CPU23                  30929      L1-icache-load-misses                                         (32.83%)
+     4.002351088 CPU19               51925804      dTLB-loads                                                    (33.10%)
+     4.002351088 CPU21             2538776018      dTLB-loads                                                    (33.10%)
+     4.002351088 CPU23                 522507      dTLB-loads                                                    (33.10%)
+     4.002351088 CPU19                    904      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.50%)
+     4.002351088 CPU21                   3657      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.50%)
+     4.002351088 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.49%)
+     4.002351088 CPU19        <not supported>      iTLB-loads                                                  
+     4.002351088 CPU21        <not supported>      iTLB-loads                                                  
+     4.002351088 CPU23        <not supported>      iTLB-loads                                                  
+     4.002351088 CPU19                      8      iTLB-load-misses                                              (33.59%)
+     4.002351088 CPU21                    908      iTLB-load-misses                                              (33.59%)
+     4.002351088 CPU23                    619      iTLB-load-misses                                              (33.59%)
+     4.002351088 CPU19        <not supported>      L1-dcache-prefetches                                        
+     4.002351088 CPU21        <not supported>      L1-dcache-prefetches                                        
+     4.002351088 CPU23        <not supported>      L1-dcache-prefetches                                        
+     4.002351088 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     4.002351088 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     4.002351088 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     5.002693393 CPU19                  18189      cache-references                                              (41.99%)
+     5.002693393 CPU21                   4160      cache-references                                              (41.99%)
+     5.002693393 CPU23                   5275      cache-references                                              (41.99%)
+     5.002693393 CPU19                   6631      cache-misses              #    0.059 % of all cache refs      (50.38%)
+     5.002693393 CPU21                     63      cache-misses              #    0.631 % of all cache refs      (50.38%)
+     5.002693393 CPU23                    242      cache-misses              #    2.359 % of all cache refs      (50.38%)
+     5.002693393 CPU19             2392141253      cycles                                                        (58.78%)
+     5.002693393 CPU21             2392186978      cycles                                                        (58.78%)
+     5.002693393 CPU23                5614104      cycles                                                        (58.78%)
+     5.002693393 CPU19              207940131      instructions              #    0.11  insn per cycle           (66.94%)
+     5.002693393 CPU21             8117601897      instructions              #    5.05  insn per cycle           (66.94%)
+     5.002693393 CPU23                1946158      instructions              #    0.35  insn per cycle           (66.94%)
+     5.002693393 CPU19               52044115      L1-dcache-loads                                               (66.54%)
+     5.002693393 CPU21             2538938841      L1-dcache-loads                                               (66.54%)
+     5.002693393 CPU23                 520863      L1-dcache-loads                                               (66.54%)
+     5.002693393 CPU19                  21883      L1-dcache-load-misses     #    0.03% of all L1-dcache hits    (66.41%)
+     5.002693393 CPU21                   6140      L1-dcache-load-misses     #    0.00% of all L1-dcache hits    (66.41%)
+     5.002693393 CPU23                   4731      L1-dcache-load-misses     #    0.90% of all L1-dcache hits    (66.41%)
+     5.002693393 CPU19                   4472      LLC-loads                                                     (66.41%)
+     5.002693393 CPU21                   2169      LLC-loads                                                     (66.41%)
+     5.002693393 CPU23                   2601      LLC-loads                                                     (66.41%)
+     5.002693393 CPU19                   1141      LLC-load-misses           #    0.76% of all LL-cache hits     (66.41%)
+     5.002693393 CPU21                    105      LLC-load-misses           #    3.41% of all LL-cache hits     (66.41%)
+     5.002693393 CPU23                    177      LLC-load-misses           #    6.57% of all LL-cache hits     (66.41%)
+     5.002693393 CPU19        <not supported>      L1-icache-loads                                             
+     5.002693393 CPU21        <not supported>      L1-icache-loads                                             
+     5.002693393 CPU23        <not supported>      L1-icache-loads                                             
+     5.002693393 CPU19                  31234      L1-icache-load-misses                                         (33.46%)
+     5.002693393 CPU21                  40177      L1-icache-load-misses                                         (33.46%)
+     5.002693393 CPU23                  31112      L1-icache-load-misses                                         (33.46%)
+     5.002693393 CPU19               51949816      dTLB-loads                                                    (33.59%)
+     5.002693393 CPU21             2540257500      dTLB-loads                                                    (33.59%)
+     5.002693393 CPU23                 520121      dTLB-loads                                                    (33.59%)
+     5.002693393 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     5.002693393 CPU21                   2989      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     5.002693393 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     5.002693393 CPU19        <not supported>      iTLB-loads                                                  
+     5.002693393 CPU21        <not supported>      iTLB-loads                                                  
+     5.002693393 CPU23        <not supported>      iTLB-loads                                                  
+     5.002693393 CPU19                      8      iTLB-load-misses                                              (33.59%)
+     5.002693393 CPU21                    890      iTLB-load-misses                                              (33.59%)
+     5.002693393 CPU23                    616      iTLB-load-misses                                              (33.59%)
+     5.002693393 CPU19        <not supported>      L1-dcache-prefetches                                        
+     5.002693393 CPU21        <not supported>      L1-dcache-prefetches                                        
+     5.002693393 CPU23        <not supported>      L1-dcache-prefetches                                        
+     5.002693393 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     5.002693393 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     5.002693393 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     6.003070130 CPU19                   8798      cache-references                                              (41.98%)
+     6.003070130 CPU21                   3327      cache-references                                              (41.98%)
+     6.003070130 CPU23                   4458      cache-references                                              (41.98%)
+     6.003070130 CPU19                   1299      cache-misses              #    0.014 % of all cache refs      (50.18%)
+     6.003070130 CPU21                     43      cache-misses              #    0.484 % of all cache refs      (50.18%)
+     6.003070130 CPU23                     95      cache-misses              #    1.022 % of all cache refs      (50.18%)
+     6.003070130 CPU19             2392269262      cycles                                                        (58.17%)
+     6.003070130 CPU21             2392308446      cycles                                                        (58.17%)
+     6.003070130 CPU23                5532755      cycles                                                        (58.17%)
+     6.003070130 CPU19              207370172      instructions              #    0.10  insn per cycle           (66.41%)
+     6.003070130 CPU21             8126533084      instructions              #    4.67  insn per cycle           (66.41%)
+     6.003070130 CPU23                1969774      instructions              #    0.36  insn per cycle           (66.41%)
+     6.003070130 CPU19               51918620      L1-dcache-loads                                               (66.41%)
+     6.003070130 CPU21             2541887227      L1-dcache-loads                                               (66.41%)
+     6.003070130 CPU23                 525961      L1-dcache-loads                                               (66.41%)
+     6.003070130 CPU19                   7495      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+     6.003070130 CPU21                   4705      L1-dcache-load-misses     #    0.00% of all L1-dcache hits    (66.41%)
+     6.003070130 CPU23                   4334      L1-dcache-load-misses     #    0.82% of all L1-dcache hits    (66.41%)
+     6.003070130 CPU19                   2585      LLC-loads                                                     (66.41%)
+     6.003070130 CPU21                   1928      LLC-loads                                                     (66.41%)
+     6.003070130 CPU23                   2208      LLC-loads                                                     (66.41%)
+     6.003070130 CPU19                    222      LLC-load-misses           #    0.18% of all LL-cache hits     (66.41%)
+     6.003070130 CPU21                    111      LLC-load-misses           #    3.85% of all LL-cache hits     (66.41%)
+     6.003070130 CPU23                    138      LLC-load-misses           #    5.28% of all LL-cache hits     (66.41%)
+     6.003070130 CPU19        <not supported>      L1-icache-loads                                             
+     6.003070130 CPU21        <not supported>      L1-icache-loads                                             
+     6.003070130 CPU23        <not supported>      L1-icache-loads                                             
+     6.003070130 CPU19                  27129      L1-icache-load-misses                                         (33.59%)
+     6.003070130 CPU21                  38023      L1-icache-load-misses                                         (33.59%)
+     6.003070130 CPU23                  30756      L1-icache-load-misses                                         (33.59%)
+     6.003070130 CPU19               51927756      dTLB-loads                                                    (33.59%)
+     6.003070130 CPU21             2541958876      dTLB-loads                                                    (33.59%)
+     6.003070130 CPU23                 518175      dTLB-loads                                                    (33.59%)
+     6.003070130 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     6.003070130 CPU21                   3376      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     6.003070130 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     6.003070130 CPU19        <not supported>      iTLB-loads                                                  
+     6.003070130 CPU21        <not supported>      iTLB-loads                                                  
+     6.003070130 CPU23        <not supported>      iTLB-loads                                                  
+     6.003070130 CPU19                      0      iTLB-load-misses                                              (33.59%)
+     6.003070130 CPU21                    827      iTLB-load-misses                                              (33.59%)
+     6.003070130 CPU23                    622      iTLB-load-misses                                              (33.59%)
+     6.003070130 CPU19        <not supported>      L1-dcache-prefetches                                        
+     6.003070130 CPU21        <not supported>      L1-dcache-prefetches                                        
+     6.003070130 CPU23        <not supported>      L1-dcache-prefetches                                        
+     6.003070130 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     6.003070130 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     6.003070130 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     7.003450923 CPU19                   8856      cache-references                                              (41.42%)
+     7.003450923 CPU21                  98273      cache-references                                              (41.42%)
+     7.003450923 CPU23                   4594      cache-references                                              (41.42%)
+     7.003450923 CPU19                   1989      cache-misses              #    0.025 % of all cache refs      (49.62%)
+     7.003450923 CPU21                   5449      cache-misses              #   25.170 % of all cache refs      (49.62%)
+     7.003450923 CPU23                    479      cache-misses              #    5.556 % of all cache refs      (49.62%)
+     7.003450923 CPU19             2392299127      cycles                                                        (58.02%)
+     7.003450923 CPU21             2392212008      cycles                                                        (58.02%)
+     7.003450923 CPU23                5730455      cycles                                                        (58.02%)
+     7.003450923 CPU19              207378285      instructions              #    0.10  insn per cycle           (66.41%)
+     7.003450923 CPU21             9544785600      instructions              #    5.21  insn per cycle           (66.41%)
+     7.003450923 CPU23                1989861      instructions              #    0.36  insn per cycle           (66.41%)
+     7.003450923 CPU19               52044405      L1-dcache-loads                                               (66.41%)
+     7.003450923 CPU21             2820739074      L1-dcache-loads                                               (66.41%)
+     7.003450923 CPU23                 530481      L1-dcache-loads                                               (66.41%)
+     7.003450923 CPU19                  19682      L1-dcache-load-misses     #    0.03% of all L1-dcache hits    (66.41%)
+     7.003450923 CPU21                 246292      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+     7.003450923 CPU23                   4473      L1-dcache-load-misses     #    0.85% of all L1-dcache hits    (66.41%)
+     7.003450923 CPU19                   3493      LLC-loads                                                     (66.41%)
+     7.003450923 CPU21                  21364      LLC-loads                                                     (66.41%)
+     7.003450923 CPU23                   2356      LLC-loads                                                     (66.41%)
+     7.003450923 CPU19                    159      LLC-load-misses           #    0.15% of all LL-cache hits     (66.57%)
+     7.003450923 CPU21                   1062      LLC-load-misses           #   19.22% of all LL-cache hits     (66.57%)
+     7.003450923 CPU23                     67      LLC-load-misses           #    2.60% of all LL-cache hits     (66.57%)
+     7.003450923 CPU19        <not supported>      L1-icache-loads                                             
+     7.003450923 CPU21        <not supported>      L1-icache-loads                                             
+     7.003450923 CPU23        <not supported>      L1-icache-loads                                             
+     7.003450923 CPU19                  29136      L1-icache-load-misses                                         (33.59%)
+     7.003450923 CPU21                4934074      L1-icache-load-misses                                         (33.59%)
+     7.003450923 CPU23                  30990      L1-icache-load-misses                                         (33.59%)
+     7.003450923 CPU19               51929160      dTLB-loads                                                    (33.59%)
+     7.003450923 CPU21             2846820132      dTLB-loads                                                    (33.59%)
+     7.003450923 CPU23                 518991      dTLB-loads                                                    (33.59%)
+     7.003450923 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     7.003450923 CPU21                   9012      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     7.003450923 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+     7.003450923 CPU19        <not supported>      iTLB-loads                                                  
+     7.003450923 CPU21        <not supported>      iTLB-loads                                                  
+     7.003450923 CPU23        <not supported>      iTLB-loads                                                  
+     7.003450923 CPU19                      0      iTLB-load-misses                                              (33.43%)
+     7.003450923 CPU21                   1029      iTLB-load-misses                                              (33.43%)
+     7.003450923 CPU23                    625      iTLB-load-misses                                              (33.43%)
+     7.003450923 CPU19        <not supported>      L1-dcache-prefetches                                        
+     7.003450923 CPU21        <not supported>      L1-dcache-prefetches                                        
+     7.003450923 CPU23        <not supported>      L1-dcache-prefetches                                        
+     7.003450923 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     7.003450923 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     7.003450923 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     8.003842046 CPU19                   9572      cache-references                                              (41.22%)
+     8.003842046 CPU21                 126138      cache-references                                              (41.22%)
+     8.003842046 CPU23                   5293      cache-references                                              (41.22%)
+     8.003842046 CPU19                   2347      cache-misses              #    0.033 % of all cache refs      (49.62%)
+     8.003842046 CPU21                   1043      cache-misses              #    3.005 % of all cache refs      (49.62%)
+     8.003842046 CPU23                    554      cache-misses              #    6.752 % of all cache refs      (49.62%)
+     8.003842046 CPU19             2392332341      cycles                                                        (58.02%)
+     8.003842046 CPU21             2392253133      cycles                                                        (58.02%)
+     8.003842046 CPU23                5704738      cycles                                                        (58.02%)
+     8.003842046 CPU19              207379837      instructions              #    0.10  insn per cycle           (66.41%)
+     8.003842046 CPU21            10183345298      instructions              #    5.35  insn per cycle           (66.41%)
+     8.003842046 CPU23                1979230      instructions              #    0.35  insn per cycle           (66.41%)
+     8.003842046 CPU19               51921517      L1-dcache-loads                                               (66.41%)
+     8.003842046 CPU21             2952049781      L1-dcache-loads                                               (66.41%)
+     8.003842046 CPU23                 527189      L1-dcache-loads                                               (66.41%)
+     8.003842046 CPU19                   7735      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.54%)
+     8.003842046 CPU21                 338639      L1-dcache-load-misses     #    0.02% of all L1-dcache hits    (66.54%)
+     8.003842046 CPU23                   4325      L1-dcache-load-misses     #    0.82% of all L1-dcache hits    (66.53%)
+     8.003842046 CPU19                   2511      LLC-loads                                                     (66.93%)
+     8.003842046 CPU21                  25263      LLC-loads                                                     (66.93%)
+     8.003842046 CPU23                   2257      LLC-loads                                                     (66.93%)
+     8.003842046 CPU19                    147      LLC-load-misses           #    0.16% of all LL-cache hits     (67.17%)
+     8.003842046 CPU21                    120      LLC-load-misses           #    1.50% of all LL-cache hits     (67.17%)
+     8.003842046 CPU23                     59      LLC-load-misses           #    2.33% of all LL-cache hits     (67.17%)
+     8.003842046 CPU19        <not supported>      L1-icache-loads                                             
+     8.003842046 CPU21        <not supported>      L1-icache-loads                                             
+     8.003842046 CPU23        <not supported>      L1-icache-loads                                             
+     8.003842046 CPU19                  28093      L1-icache-load-misses                                         (33.59%)
+     8.003842046 CPU21                6853707      L1-icache-load-misses                                         (33.59%)
+     8.003842046 CPU23                  32095      L1-icache-load-misses                                         (33.59%)
+     8.003842046 CPU19               51933512      dTLB-loads                                                    (33.47%)
+     8.003842046 CPU21             2957442319      dTLB-loads                                                    (33.47%)
+     8.003842046 CPU23                 531288      dTLB-loads                                                    (33.47%)
+     8.003842046 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.07%)
+     8.003842046 CPU21                   6822      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.07%)
+     8.003842046 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.07%)
+     8.003842046 CPU19        <not supported>      iTLB-loads                                                  
+     8.003842046 CPU21        <not supported>      iTLB-loads                                                  
+     8.003842046 CPU23        <not supported>      iTLB-loads                                                  
+     8.003842046 CPU19                      0      iTLB-load-misses                                              (32.83%)
+     8.003842046 CPU21                    779      iTLB-load-misses                                              (32.83%)
+     8.003842046 CPU23                    606      iTLB-load-misses                                              (32.83%)
+     8.003842046 CPU19        <not supported>      L1-dcache-prefetches                                        
+     8.003842046 CPU21        <not supported>      L1-dcache-prefetches                                        
+     8.003842046 CPU23        <not supported>      L1-dcache-prefetches                                        
+     8.003842046 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     8.003842046 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     8.003842046 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+     9.004210296 CPU19                  10149      cache-references                                              (41.31%)
+     9.004210296 CPU21                 127148      cache-references                                              (41.31%)
+     9.004210296 CPU23                   5671      cache-references                                              (41.31%)
+     9.004210296 CPU19                   3311      cache-misses              #    0.053 % of all cache refs      (49.71%)
+     9.004210296 CPU21                    977      cache-misses              #    2.172 % of all cache refs      (49.71%)
+     9.004210296 CPU23                    519      cache-misses              #    6.550 % of all cache refs      (49.71%)
+     9.004210296 CPU19             2392235020      cycles                                                        (58.10%)
+     9.004210296 CPU21             2392161466      cycles                                                        (58.10%)
+     9.004210296 CPU23                5712930      cycles                                                        (58.10%)
+     9.004210296 CPU19              207352790      instructions              #    0.10  insn per cycle           (66.50%)
+     9.004210296 CPU21            10218695054      instructions              #    5.22  insn per cycle           (66.50%)
+     9.004210296 CPU23                1966653      instructions              #    0.35  insn per cycle           (66.50%)
+     9.004210296 CPU19               51913587      L1-dcache-loads                                               (66.90%)
+     9.004210296 CPU21             2962971181      L1-dcache-loads                                               (66.90%)
+     9.004210296 CPU23                 522745      L1-dcache-loads                                               (66.90%)
+     9.004210296 CPU19                   8535      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.18%)
+     9.004210296 CPU21                 344106      L1-dcache-load-misses     #    0.02% of all L1-dcache hits    (67.18%)
+     9.004210296 CPU23                   4424      L1-dcache-load-misses     #    0.84% of all L1-dcache hits    (67.18%)
+     9.004210296 CPU19                   2658      LLC-loads                                                     (67.18%)
+     9.004210296 CPU21                  25552      LLC-loads                                                     (67.18%)
+     9.004210296 CPU23                   2450      LLC-loads                                                     (67.18%)
+     9.004210296 CPU19                    220      LLC-load-misses           #    0.26% of all LL-cache hits     (67.09%)
+     9.004210296 CPU21                    117      LLC-load-misses           #    1.18% of all LL-cache hits     (67.09%)
+     9.004210296 CPU23                    110      LLC-load-misses           #    4.35% of all LL-cache hits     (67.09%)
+     9.004210296 CPU19        <not supported>      L1-icache-loads                                             
+     9.004210296 CPU21        <not supported>      L1-icache-loads                                             
+     9.004210296 CPU23        <not supported>      L1-icache-loads                                             
+     9.004210296 CPU19                  27168      L1-icache-load-misses                                         (33.10%)
+     9.004210296 CPU21                6693590      L1-icache-load-misses                                         (33.10%)
+     9.004210296 CPU23                  30348      L1-icache-load-misses                                         (33.10%)
+     9.004210296 CPU19               51925725      dTLB-loads                                                    (32.82%)
+     9.004210296 CPU21             2956906471      dTLB-loads                                                    (32.82%)
+     9.004210296 CPU23                 529866      dTLB-loads                                                    (32.82%)
+     9.004210296 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+     9.004210296 CPU21                   7427      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+     9.004210296 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+     9.004210296 CPU19        <not supported>      iTLB-loads                                                  
+     9.004210296 CPU21        <not supported>      iTLB-loads                                                  
+     9.004210296 CPU23        <not supported>      iTLB-loads                                                  
+     9.004210296 CPU19                      0      iTLB-load-misses                                              (32.91%)
+     9.004210296 CPU21                    701      iTLB-load-misses                                              (32.91%)
+     9.004210296 CPU23                    610      iTLB-load-misses                                              (32.91%)
+     9.004210296 CPU19        <not supported>      L1-dcache-prefetches                                        
+     9.004210296 CPU21        <not supported>      L1-dcache-prefetches                                        
+     9.004210296 CPU23        <not supported>      L1-dcache-prefetches                                        
+     9.004210296 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+     9.004210296 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+     9.004210296 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    10.004546432 CPU19                   8407      cache-references                                              (41.99%)
+    10.004546432 CPU21                 126777      cache-references                                              (41.99%)
+    10.004546432 CPU23                   4463      cache-references                                              (41.99%)
+    10.004546432 CPU19                   1337      cache-misses              #    0.024 % of all cache refs      (50.38%)
+    10.004546432 CPU21                   2649      cache-misses              #    4.983 % of all cache refs      (50.38%)
+    10.004546432 CPU23                     39      cache-misses              #    0.515 % of all cache refs      (50.38%)
+    10.004546432 CPU19             2392179651      cycles                                                        (58.78%)
+    10.004546432 CPU21             2392105049      cycles                                                        (58.78%)
+    10.004546432 CPU23                5504358      cycles                                                        (58.78%)
+    10.004546432 CPU19              207370219      instructions              #    0.10  insn per cycle           (67.18%)
+    10.004546432 CPU21            10158890426      instructions              #    5.08  insn per cycle           (67.18%)
+    10.004546432 CPU23                1943462      instructions              #    0.35  insn per cycle           (67.18%)
+    10.004546432 CPU19               51919605      L1-dcache-loads                                               (67.18%)
+    10.004546432 CPU21             2946472294      L1-dcache-loads                                               (67.18%)
+    10.004546432 CPU23                 518707      L1-dcache-loads                                               (67.18%)
+    10.004546432 CPU19                   7537      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.12%)
+    10.004546432 CPU21                 347671      L1-dcache-load-misses     #    0.02% of all L1-dcache hits    (67.12%)
+    10.004546432 CPU23                   4076      L1-dcache-load-misses     #    0.77% of all L1-dcache hits    (67.12%)
+    10.004546432 CPU19                   2472      LLC-loads                                                     (66.72%)
+    10.004546432 CPU21                  30403      LLC-loads                                                     (66.72%)
+    10.004546432 CPU23                   2084      LLC-loads                                                     (66.72%)
+    10.004546432 CPU19                    210      LLC-load-misses           #    0.28% of all LL-cache hits     (66.41%)
+    10.004546432 CPU21                    245      LLC-load-misses           #    2.04% of all LL-cache hits     (66.41%)
+    10.004546432 CPU23                    124      LLC-load-misses           #    4.99% of all LL-cache hits     (66.41%)
+    10.004546432 CPU19        <not supported>      L1-icache-loads                                             
+    10.004546432 CPU21        <not supported>      L1-icache-loads                                             
+    10.004546432 CPU23        <not supported>      L1-icache-loads                                             
+    10.004546432 CPU19                  27995      L1-icache-load-misses                                         (32.82%)
+    10.004546432 CPU21                6874311      L1-icache-load-misses                                         (32.82%)
+    10.004546432 CPU23                  31258      L1-icache-load-misses                                         (32.82%)
+    10.004546432 CPU19               51926038      dTLB-loads                                                    (32.88%)
+    10.004546432 CPU21             2963081290      dTLB-loads                                                    (32.88%)
+    10.004546432 CPU23                 522379      dTLB-loads                                                    (32.87%)
+    10.004546432 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.27%)
+    10.004546432 CPU21                   7068      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.27%)
+    10.004546432 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.27%)
+    10.004546432 CPU19        <not supported>      iTLB-loads                                                  
+    10.004546432 CPU21        <not supported>      iTLB-loads                                                  
+    10.004546432 CPU23        <not supported>      iTLB-loads                                                  
+    10.004546432 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    10.004546432 CPU21                    848      iTLB-load-misses                                              (33.59%)
+    10.004546432 CPU23                    607      iTLB-load-misses                                              (33.59%)
+    10.004546432 CPU19        <not supported>      L1-dcache-prefetches                                        
+    10.004546432 CPU21        <not supported>      L1-dcache-prefetches                                        
+    10.004546432 CPU23        <not supported>      L1-dcache-prefetches                                        
+    10.004546432 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    10.004546432 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    10.004546432 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    11.004885112 CPU19                  10105      cache-references                                              (41.99%)
+    11.004885112 CPU21                 127689      cache-references                                              (41.99%)
+    11.004885112 CPU23                   4513      cache-references                                              (41.99%)
+    11.004885112 CPU19                   2433      cache-misses              #    0.047 % of all cache refs      (50.38%)
+    11.004885112 CPU21                    730      cache-misses              #    1.218 % of all cache refs      (50.38%)
+    11.004885112 CPU23                     77      cache-misses              #    1.055 % of all cache refs      (50.38%)
+    11.004885112 CPU19             2392239892      cycles                                                        (58.78%)
+    11.004885112 CPU21             2392189825      cycles                                                        (58.78%)
+    11.004885112 CPU23                5520996      cycles                                                        (58.78%)
+    11.004885112 CPU19              207365776      instructions              #    0.10  insn per cycle           (67.15%)
+    11.004885112 CPU21            10191543663      instructions              #    5.01  insn per cycle           (67.15%)
+    11.004885112 CPU23                1940859      instructions              #    0.35  insn per cycle           (67.15%)
+    11.004885112 CPU19               51918103      L1-dcache-loads                                               (66.75%)
+    11.004885112 CPU21             2956613842      L1-dcache-loads                                               (66.75%)
+    11.004885112 CPU23                 519189      L1-dcache-loads                                               (66.76%)
+    11.004885112 CPU19                   7796      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    11.004885112 CPU21                 338575      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    11.004885112 CPU23                   4279      L1-dcache-load-misses     #    0.81% of all L1-dcache hits    (66.41%)
+    11.004885112 CPU19                   2615      LLC-loads                                                     (66.41%)
+    11.004885112 CPU21                  24999      LLC-loads                                                     (66.41%)
+    11.004885112 CPU23                   2169      LLC-loads                                                     (66.41%)
+    11.004885112 CPU19                    286      LLC-load-misses           #    0.41% of all LL-cache hits     (66.41%)
+    11.004885112 CPU21                    161      LLC-load-misses           #    1.22% of all LL-cache hits     (66.41%)
+    11.004885112 CPU23                    120      LLC-load-misses           #    4.89% of all LL-cache hits     (66.41%)
+    11.004885112 CPU19        <not supported>      L1-icache-loads                                             
+    11.004885112 CPU21        <not supported>      L1-icache-loads                                             
+    11.004885112 CPU23        <not supported>      L1-icache-loads                                             
+    11.004885112 CPU19                  27766      L1-icache-load-misses                                         (33.24%)
+    11.004885112 CPU21                6721081      L1-icache-load-misses                                         (33.24%)
+    11.004885112 CPU23                  30883      L1-icache-load-misses                                         (33.24%)
+    11.004885112 CPU19               51926666      dTLB-loads                                                    (33.59%)
+    11.004885112 CPU21             2956250946      dTLB-loads                                                    (33.59%)
+    11.004885112 CPU23                 518724      dTLB-loads                                                    (33.59%)
+    11.004885112 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    11.004885112 CPU21                   6683      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    11.004885112 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    11.004885112 CPU19        <not supported>      iTLB-loads                                                  
+    11.004885112 CPU21        <not supported>      iTLB-loads                                                  
+    11.004885112 CPU23        <not supported>      iTLB-loads                                                  
+    11.004885112 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    11.004885112 CPU21                   1003      iTLB-load-misses                                              (33.59%)
+    11.004885112 CPU23                    604      iTLB-load-misses                                              (33.59%)
+    11.004885112 CPU19        <not supported>      L1-dcache-prefetches                                        
+    11.004885112 CPU21        <not supported>      L1-dcache-prefetches                                        
+    11.004885112 CPU23        <not supported>      L1-dcache-prefetches                                        
+    11.004885112 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    11.004885112 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    11.004885112 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    12.005236326 CPU19                   9722      cache-references                                              (41.99%)
+    12.005236326 CPU21                 137046      cache-references                                              (41.99%)
+    12.005236326 CPU23                   5118      cache-references                                              (41.99%)
+    12.005236326 CPU19                   2471      cache-misses              #    0.053 % of all cache refs      (50.38%)
+    12.005236326 CPU21                   2042      cache-misses              #    3.077 % of all cache refs      (50.38%)
+    12.005236326 CPU23                    265      cache-misses              #    3.723 % of all cache refs      (50.38%)
+    12.005236326 CPU19             2392258587      cycles                                                        (58.39%)
+    12.005236326 CPU21             2392196189      cycles                                                        (58.39%)
+    12.005236326 CPU23                5615446      cycles                                                        (58.39%)
+    12.005236326 CPU19              207382016      instructions              #    0.09  insn per cycle           (66.41%)
+    12.005236326 CPU21            10196091666      instructions              #    4.94  insn per cycle           (66.41%)
+    12.005236326 CPU23                1983691      instructions              #    0.35  insn per cycle           (66.41%)
+    12.005236326 CPU19               51923071      L1-dcache-loads                                               (66.41%)
+    12.005236326 CPU21             2954987797      L1-dcache-loads                                               (66.41%)
+    12.005236326 CPU23                 529829      L1-dcache-loads                                               (66.41%)
+    12.005236326 CPU19                   8567      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    12.005236326 CPU21                 352578      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    12.005236326 CPU23                   4548      L1-dcache-load-misses     #    0.86% of all L1-dcache hits    (66.41%)
+    12.005236326 CPU19                   2769      LLC-loads                                                     (66.41%)
+    12.005236326 CPU21                  27428      LLC-loads                                                     (66.41%)
+    12.005236326 CPU23                   2463      LLC-loads                                                     (66.41%)
+    12.005236326 CPU19                    263      LLC-load-misses           #    0.41% of all LL-cache hits     (66.41%)
+    12.005236326 CPU21                    176      LLC-load-misses           #    1.23% of all LL-cache hits     (66.41%)
+    12.005236326 CPU23                    173      LLC-load-misses           #    7.05% of all LL-cache hits     (66.41%)
+    12.005236326 CPU19        <not supported>      L1-icache-loads                                             
+    12.005236326 CPU21        <not supported>      L1-icache-loads                                             
+    12.005236326 CPU23        <not supported>      L1-icache-loads                                             
+    12.005236326 CPU19                  27891      L1-icache-load-misses                                         (33.59%)
+    12.005236326 CPU21                6720894      L1-icache-load-misses                                         (33.59%)
+    12.005236326 CPU23                  30305      L1-icache-load-misses                                         (33.59%)
+    12.005236326 CPU19               51927253      dTLB-loads                                                    (33.59%)
+    12.005236326 CPU21             2951838285      dTLB-loads                                                    (33.59%)
+    12.005236326 CPU23                 522635      dTLB-loads                                                    (33.59%)
+    12.005236326 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    12.005236326 CPU21                   7207      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    12.005236326 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    12.005236326 CPU19        <not supported>      iTLB-loads                                                  
+    12.005236326 CPU21        <not supported>      iTLB-loads                                                  
+    12.005236326 CPU23        <not supported>      iTLB-loads                                                  
+    12.005236326 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    12.005236326 CPU21                    783      iTLB-load-misses                                              (33.59%)
+    12.005236326 CPU23                    622      iTLB-load-misses                                              (33.59%)
+    12.005236326 CPU19        <not supported>      L1-dcache-prefetches                                        
+    12.005236326 CPU21        <not supported>      L1-dcache-prefetches                                        
+    12.005236326 CPU23        <not supported>      L1-dcache-prefetches                                        
+    12.005236326 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    12.005236326 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    12.005236326 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    13.005584528 CPU19                   9821      cache-references                                              (41.63%)
+    13.005584528 CPU21                 128918      cache-references                                              (41.63%)
+    13.005584528 CPU23                   5212      cache-references                                              (41.63%)
+    13.005584528 CPU19                   2800      cache-misses              #    0.064 % of all cache refs      (49.63%)
+    13.005584528 CPU21                    973      cache-misses              #    1.367 % of all cache refs      (49.63%)
+    13.005584528 CPU23                    290      cache-misses              #    4.160 % of all cache refs      (49.63%)
+    13.005584528 CPU19             2392308869      cycles                                                        (58.02%)
+    13.005584528 CPU21             2392245857      cycles                                                        (58.01%)
+    13.005584528 CPU23                5770212      cycles                                                        (58.02%)
+    13.005584528 CPU19              207363631      instructions              #    0.09  insn per cycle           (66.41%)
+    13.005584528 CPU21            10211506818      instructions              #    4.88  insn per cycle           (66.41%)
+    13.005584528 CPU23                1983046      instructions              #    0.35  insn per cycle           (66.41%)
+    13.005584528 CPU19               51917427      L1-dcache-loads                                               (66.41%)
+    13.005584528 CPU21             2958217027      L1-dcache-loads                                               (66.41%)
+    13.005584528 CPU23                 528673      L1-dcache-loads                                               (66.41%)
+    13.005584528 CPU19                   8670      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    13.005584528 CPU21                 341496      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    13.005584528 CPU23                   4723      L1-dcache-load-misses     #    0.90% of all L1-dcache hits    (66.41%)
+    13.005584528 CPU19                   2793      LLC-loads                                                     (66.41%)
+    13.005584528 CPU21                  25280      LLC-loads                                                     (66.41%)
+    13.005584528 CPU23                   2586      LLC-loads                                                     (66.41%)
+    13.005584528 CPU19                    302      LLC-load-misses           #    0.51% of all LL-cache hits     (66.41%)
+    13.005584528 CPU21                    310      LLC-load-misses           #    2.04% of all LL-cache hits     (66.41%)
+    13.005584528 CPU23                    224      LLC-load-misses           #    9.08% of all LL-cache hits     (66.41%)
+    13.005584528 CPU19        <not supported>      L1-icache-loads                                             
+    13.005584528 CPU21        <not supported>      L1-icache-loads                                             
+    13.005584528 CPU23        <not supported>      L1-icache-loads                                             
+    13.005584528 CPU19                  27879      L1-icache-load-misses                                         (33.59%)
+    13.005584528 CPU21                6715134      L1-icache-load-misses                                         (33.59%)
+    13.005584528 CPU23                  30880      L1-icache-load-misses                                         (33.59%)
+    13.005584528 CPU19               51926205      dTLB-loads                                                    (33.59%)
+    13.005584528 CPU21             2957036241      dTLB-loads                                                    (33.59%)
+    13.005584528 CPU23                 520731      dTLB-loads                                                    (33.59%)
+    13.005584528 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    13.005584528 CPU21                   7243      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    13.005584528 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    13.005584528 CPU19        <not supported>      iTLB-loads                                                  
+    13.005584528 CPU21        <not supported>      iTLB-loads                                                  
+    13.005584528 CPU23        <not supported>      iTLB-loads                                                  
+    13.005584528 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    13.005584528 CPU21                    839      iTLB-load-misses                                              (33.59%)
+    13.005584528 CPU23                    616      iTLB-load-misses                                              (33.59%)
+    13.005584528 CPU19        <not supported>      L1-dcache-prefetches                                        
+    13.005584528 CPU21        <not supported>      L1-dcache-prefetches                                        
+    13.005584528 CPU23        <not supported>      L1-dcache-prefetches                                        
+    13.005584528 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    13.005584528 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    13.005584528 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    14.005955222 CPU19                   8772      cache-references                                              (41.22%)
+    14.005955222 CPU21                 127012      cache-references                                              (41.22%)
+    14.005955222 CPU23                   5007      cache-references                                              (41.22%)
+    14.005955222 CPU19                   1779      cache-misses              #    0.044 % of all cache refs      (49.62%)
+    14.005955222 CPU21                    971      cache-misses              #    1.292 % of all cache refs      (49.62%)
+    14.005955222 CPU23                    477      cache-misses              #    6.984 % of all cache refs      (49.62%)
+    14.005955222 CPU19             2392317509      cycles                                                        (58.02%)
+    14.005955222 CPU21             2392250466      cycles                                                        (58.02%)
+    14.005955222 CPU23                5679126      cycles                                                        (58.02%)
+    14.005955222 CPU19              207374662      instructions              #    0.09  insn per cycle           (66.41%)
+    14.005955222 CPU21            10195933869      instructions              #    4.83  insn per cycle           (66.41%)
+    14.005955222 CPU23                1978767      instructions              #    0.35  insn per cycle           (66.41%)
+    14.005955222 CPU19               51919668      L1-dcache-loads                                               (66.41%)
+    14.005955222 CPU21             2957052564      L1-dcache-loads                                               (66.41%)
+    14.005955222 CPU23                 527327      L1-dcache-loads                                               (66.41%)
+    14.005955222 CPU19                   7488      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    14.005955222 CPU21                 337978      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    14.005955222 CPU23                   4378      L1-dcache-load-misses     #    0.83% of all L1-dcache hits    (66.41%)
+    14.005955222 CPU19                   2442      LLC-loads                                                     (66.72%)
+    14.005955222 CPU21                  25173      LLC-loads                                                     (66.72%)
+    14.005955222 CPU23                   2134      LLC-loads                                                     (66.72%)
+    14.005955222 CPU19                    134      LLC-load-misses           #    0.24% of all LL-cache hits     (67.12%)
+    14.005955222 CPU21                     56      LLC-load-misses           #    0.35% of all LL-cache hits     (67.12%)
+    14.005955222 CPU23                     32      LLC-load-misses           #    1.31% of all LL-cache hits     (67.12%)
+    14.005955222 CPU19        <not supported>      L1-icache-loads                                             
+    14.005955222 CPU21        <not supported>      L1-icache-loads                                             
+    14.005955222 CPU23        <not supported>      L1-icache-loads                                             
+    14.005955222 CPU19                  26107      L1-icache-load-misses                                         (33.59%)
+    14.005955222 CPU21                6750957      L1-icache-load-misses                                         (33.59%)
+    14.005955222 CPU23                  31472      L1-icache-load-misses                                         (33.59%)
+    14.005955222 CPU19               51928830      dTLB-loads                                                    (33.59%)
+    14.005955222 CPU21             2952878740      dTLB-loads                                                    (33.59%)
+    14.005955222 CPU23                 517567      dTLB-loads                                                    (33.59%)
+    14.005955222 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.28%)
+    14.005955222 CPU21                   6559      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.28%)
+    14.005955222 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.28%)
+    14.005955222 CPU19        <not supported>      iTLB-loads                                                  
+    14.005955222 CPU21        <not supported>      iTLB-loads                                                  
+    14.005955222 CPU23        <not supported>      iTLB-loads                                                  
+    14.005955222 CPU19                      0      iTLB-load-misses                                              (32.88%)
+    14.005955222 CPU21                    878      iTLB-load-misses                                              (32.88%)
+    14.005955222 CPU23                    614      iTLB-load-misses                                              (32.88%)
+    14.005955222 CPU19        <not supported>      L1-dcache-prefetches                                        
+    14.005955222 CPU21        <not supported>      L1-dcache-prefetches                                        
+    14.005955222 CPU23        <not supported>      L1-dcache-prefetches                                        
+    14.005955222 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    14.005955222 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    14.005955222 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    15.006276970 CPU19                   9253      cache-references                                              (41.22%)
+    15.006276970 CPU21                 135692      cache-references                                              (41.22%)
+    15.006276970 CPU23                   5201      cache-references                                              (41.22%)
+    15.006276970 CPU19                   2081      cache-misses              #    0.055 % of all cache refs      (49.62%)
+    15.006276970 CPU21                   1973      cache-misses              #    2.491 % of all cache refs      (49.62%)
+    15.006276970 CPU23                    465      cache-misses              #    6.918 % of all cache refs      (49.62%)
+    15.006276970 CPU19             2392214543      cycles                                                        (58.01%)
+    15.006276970 CPU21             2392136575      cycles                                                        (58.01%)
+    15.006276970 CPU23                5705988      cycles                                                        (58.01%)
+    15.006276970 CPU19              207376687      instructions              #    0.09  insn per cycle           (66.41%)
+    15.006276970 CPU21            10185868258      instructions              #    4.78  insn per cycle           (66.41%)
+    15.006276970 CPU23                1985282      instructions              #    0.35  insn per cycle           (66.41%)
+    15.006276970 CPU19               51918214      L1-dcache-loads                                               (66.69%)
+    15.006276970 CPU21             2954538335      L1-dcache-loads                                               (66.69%)
+    15.006276970 CPU23                 523459      L1-dcache-loads                                               (66.69%)
+    15.006276970 CPU19                   7509      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.09%)
+    15.006276970 CPU21                 336645      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.09%)
+    15.006276970 CPU23                   4188      L1-dcache-load-misses     #    0.80% of all L1-dcache hits    (67.09%)
+    15.006276970 CPU19                   2456      LLC-loads                                                     (67.18%)
+    15.006276970 CPU21                  24991      LLC-loads                                                     (67.18%)
+    15.006276970 CPU23                   2146      LLC-loads                                                     (67.18%)
+    15.006276970 CPU19                    113      LLC-load-misses           #    0.22% of all LL-cache hits     (67.18%)
+    15.006276970 CPU21                     50      LLC-load-misses           #    0.30% of all LL-cache hits     (67.18%)
+    15.006276970 CPU23                     46      LLC-load-misses           #    1.90% of all LL-cache hits     (67.18%)
+    15.006276970 CPU19        <not supported>      L1-icache-loads                                             
+    15.006276970 CPU21        <not supported>      L1-icache-loads                                             
+    15.006276970 CPU23        <not supported>      L1-icache-loads                                             
+    15.006276970 CPU19                  29140      L1-icache-load-misses                                         (33.31%)
+    15.006276970 CPU21                6681773      L1-icache-load-misses                                         (33.31%)
+    15.006276970 CPU23                  32033      L1-icache-load-misses                                         (33.31%)
+    15.006276970 CPU19               51936000      dTLB-loads                                                    (32.91%)
+    15.006276970 CPU21             2949758266      dTLB-loads                                                    (32.91%)
+    15.006276970 CPU23                 534447      dTLB-loads                                                    (32.91%)
+    15.006276970 CPU19                     21      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+    15.006276970 CPU21                   7577      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+    15.006276970 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+    15.006276970 CPU19        <not supported>      iTLB-loads                                                  
+    15.006276970 CPU21        <not supported>      iTLB-loads                                                  
+    15.006276970 CPU23        <not supported>      iTLB-loads                                                  
+    15.006276970 CPU19                     15      iTLB-load-misses                                              (32.82%)
+    15.006276970 CPU21                   1072      iTLB-load-misses                                              (32.82%)
+    15.006276970 CPU23                    624      iTLB-load-misses                                              (32.82%)
+    15.006276970 CPU19        <not supported>      L1-dcache-prefetches                                        
+    15.006276970 CPU21        <not supported>      L1-dcache-prefetches                                        
+    15.006276970 CPU23        <not supported>      L1-dcache-prefetches                                        
+    15.006276970 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    15.006276970 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    15.006276970 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    16.006639887 CPU19                   9441      cache-references                                              (41.87%)
+    16.006639887 CPU21                 125507      cache-references                                              (41.87%)
+    16.006639887 CPU23                   5252      cache-references                                              (41.87%)
+    16.006639887 CPU19                   2450      cache-misses              #    0.069 % of all cache refs      (50.27%)
+    16.006639887 CPU21                    736      cache-misses              #    0.897 % of all cache refs      (50.27%)
+    16.006639887 CPU23                    493      cache-misses              #    7.436 % of all cache refs      (50.26%)
+    16.006639887 CPU19             2392258040      cycles                                                        (58.66%)
+    16.006639887 CPU21             2392188900      cycles                                                        (58.66%)
+    16.006639887 CPU23                5684173      cycles                                                        (58.66%)
+    16.006639887 CPU19              207366008      instructions              #    0.09  insn per cycle           (67.06%)
+    16.006639887 CPU21            10183911013      instructions              #    4.74  insn per cycle           (67.06%)
+    16.006639887 CPU23                1975178      instructions              #    0.35  insn per cycle           (67.06%)
+    16.006639887 CPU19               51915960      L1-dcache-loads                                               (67.18%)
+    16.006639887 CPU21             2954823869      L1-dcache-loads                                               (67.18%)
+    16.006639887 CPU23                 521099      L1-dcache-loads                                               (67.18%)
+    16.006639887 CPU19                   7886      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.18%)
+    16.006639887 CPU21                 336064      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.18%)
+    16.006639887 CPU23                   4337      L1-dcache-load-misses     #    0.82% of all L1-dcache hits    (67.18%)
+    16.006639887 CPU19                   2563      LLC-loads                                                     (66.93%)
+    16.006639887 CPU21                  25203      LLC-loads                                                     (66.93%)
+    16.006639887 CPU23                   2300      LLC-loads                                                     (66.93%)
+    16.006639887 CPU19                    180      LLC-load-misses           #    0.37% of all LL-cache hits     (66.53%)
+    16.006639887 CPU21                    108      LLC-load-misses           #    0.63% of all LL-cache hits     (66.53%)
+    16.006639887 CPU23                    102      LLC-load-misses           #    4.22% of all LL-cache hits     (66.53%)
+    16.006639887 CPU19        <not supported>      L1-icache-loads                                             
+    16.006639887 CPU21        <not supported>      L1-icache-loads                                             
+    16.006639887 CPU23        <not supported>      L1-icache-loads                                             
+    16.006639887 CPU19                  29049      L1-icache-load-misses                                         (32.82%)
+    16.006639887 CPU21                6844183      L1-icache-load-misses                                         (32.82%)
+    16.006639887 CPU23                  31395      L1-icache-load-misses                                         (32.82%)
+    16.006639887 CPU19               51927371      dTLB-loads                                                    (32.82%)
+    16.006639887 CPU21             2960542234      dTLB-loads                                                    (32.82%)
+    16.006639887 CPU23                 531969      dTLB-loads                                                    (32.82%)
+    16.006639887 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.06%)
+    16.006639887 CPU21                   7748      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.06%)
+    16.006639887 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.06%)
+    16.006639887 CPU19        <not supported>      iTLB-loads                                                  
+    16.006639887 CPU21        <not supported>      iTLB-loads                                                  
+    16.006639887 CPU23        <not supported>      iTLB-loads                                                  
+    16.006639887 CPU19                      0      iTLB-load-misses                                              (33.46%)
+    16.006639887 CPU21                    881      iTLB-load-misses                                              (33.46%)
+    16.006639887 CPU23                    618      iTLB-load-misses                                              (33.46%)
+    16.006639887 CPU19        <not supported>      L1-dcache-prefetches                                        
+    16.006639887 CPU21        <not supported>      L1-dcache-prefetches                                        
+    16.006639887 CPU23        <not supported>      L1-dcache-prefetches                                        
+    16.006639887 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    16.006639887 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    16.006639887 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    17.006959707 CPU19                  38691      cache-references                                              (41.99%)
+    17.006959707 CPU21                 123811      cache-references                                              (41.99%)
+    17.006959707 CPU23                   5170      cache-references                                              (41.99%)
+    17.006959707 CPU19                  19794      cache-misses              #    0.595 % of all cache refs      (50.38%)
+    17.006959707 CPU21                    228      cache-misses              #    0.270 % of all cache refs      (50.38%)
+    17.006959707 CPU23                    204      cache-misses              #    3.117 % of all cache refs      (50.38%)
+    17.006959707 CPU19             2392210842      cycles                                                        (58.78%)
+    17.006959707 CPU21             2392146626      cycles                                                        (58.78%)
+    17.006959707 CPU23                5584893      cycles                                                        (58.78%)
+    17.006959707 CPU19              207483186      instructions              #    0.09  insn per cycle           (67.18%)
+    17.006959707 CPU21            10191336324      instructions              #    4.71  insn per cycle           (67.18%)
+    17.006959707 CPU23                1943148      instructions              #    0.35  insn per cycle           (67.18%)
+    17.006959707 CPU19               51955535      L1-dcache-loads                                               (66.96%)
+    17.006959707 CPU21             2957413672      L1-dcache-loads                                               (66.96%)
+    17.006959707 CPU23                 518562      L1-dcache-loads                                               (66.96%)
+    17.006959707 CPU19                  23641      L1-dcache-load-misses     #    0.04% of all L1-dcache hits    (66.56%)
+    17.006959707 CPU21                 340679      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.56%)
+    17.006959707 CPU23                   4400      L1-dcache-load-misses     #    0.84% of all L1-dcache hits    (66.56%)
+    17.006959707 CPU19                   2748      LLC-loads                                                     (66.41%)
+    17.006959707 CPU21                  25579      LLC-loads                                                     (66.41%)
+    17.006959707 CPU23                   2492      LLC-loads                                                     (66.41%)
+    17.006959707 CPU19                    272      LLC-load-misses           #    0.59% of all LL-cache hits     (66.41%)
+    17.006959707 CPU21                    162      LLC-load-misses           #    0.92% of all LL-cache hits     (66.41%)
+    17.006959707 CPU23                    173      LLC-load-misses           #    7.15% of all LL-cache hits     (66.41%)
+    17.006959707 CPU19        <not supported>      L1-icache-loads                                             
+    17.006959707 CPU21        <not supported>      L1-icache-loads                                             
+    17.006959707 CPU23        <not supported>      L1-icache-loads                                             
+    17.006959707 CPU19                  28756      L1-icache-load-misses                                         (33.03%)
+    17.006959707 CPU21                6754664      L1-icache-load-misses                                         (33.03%)
+    17.006959707 CPU23                  30370      L1-icache-load-misses                                         (33.03%)
+    17.006959707 CPU19               51925437      dTLB-loads                                                    (33.43%)
+    17.006959707 CPU21             2950967005      dTLB-loads                                                    (33.43%)
+    17.006959707 CPU23                 521110      dTLB-loads                                                    (33.43%)
+    17.006959707 CPU19                   2995      dTLB-load-misses          #    0.01% of all dTLB cache hits   (33.59%)
+    17.006959707 CPU21                   7294      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    17.006959707 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    17.006959707 CPU19        <not supported>      iTLB-loads                                                  
+    17.006959707 CPU21        <not supported>      iTLB-loads                                                  
+    17.006959707 CPU23        <not supported>      iTLB-loads                                                  
+    17.006959707 CPU19                      8      iTLB-load-misses                                              (33.59%)
+    17.006959707 CPU21                    782      iTLB-load-misses                                              (33.59%)
+    17.006959707 CPU23                    625      iTLB-load-misses                                              (33.59%)
+    17.006959707 CPU19        <not supported>      L1-dcache-prefetches                                        
+    17.006959707 CPU21        <not supported>      L1-dcache-prefetches                                        
+    17.006959707 CPU23        <not supported>      L1-dcache-prefetches                                        
+    17.006959707 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    17.006959707 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    17.006959707 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    18.007289789 CPU19                   8417      cache-references                                              (41.99%)
+    18.007289789 CPU21                 125977      cache-references                                              (41.99%)
+    18.007289789 CPU23                   4618      cache-references                                              (41.99%)
+    18.007289789 CPU19                   1661      cache-misses              #    0.053 % of all cache refs      (50.38%)
+    18.007289789 CPU21                    252      cache-misses              #    0.290 % of all cache refs      (50.38%)
+    18.007289789 CPU23                     93      cache-misses              #    1.445 % of all cache refs      (50.38%)
+    18.007289789 CPU19             2392250660      cycles                                                        (58.60%)
+    18.007289789 CPU21             2392186166      cycles                                                        (58.60%)
+    18.007289789 CPU23                5540056      cycles                                                        (58.60%)
+    18.007289789 CPU19              207364869      instructions              #    0.09  insn per cycle           (66.60%)
+    18.007289789 CPU21            10201497416      instructions              #    4.69  insn per cycle           (66.60%)
+    18.007289789 CPU23                1943663      instructions              #    0.35  insn per cycle           (66.60%)
+    18.007289789 CPU19               51918986      L1-dcache-loads                                               (66.41%)
+    18.007289789 CPU21             2959050709      L1-dcache-loads                                               (66.41%)
+    18.007289789 CPU23                 525554      L1-dcache-loads                                               (66.41%)
+    18.007289789 CPU19                   7595      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    18.007289789 CPU21                 336016      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    18.007289789 CPU23                   4359      L1-dcache-load-misses     #    0.83% of all L1-dcache hits    (66.41%)
+    18.007289789 CPU19                   2534      LLC-loads                                                     (66.41%)
+    18.007289789 CPU21                  25412      LLC-loads                                                     (66.41%)
+    18.007289789 CPU23                   2270      LLC-loads                                                     (66.41%)
+    18.007289789 CPU19                    207      LLC-load-misses           #    0.48% of all LL-cache hits     (66.41%)
+    18.007289789 CPU21                    143      LLC-load-misses           #    0.79% of all LL-cache hits     (66.41%)
+    18.007289789 CPU23                    140      LLC-load-misses           #    5.81% of all LL-cache hits     (66.41%)
+    18.007289789 CPU19        <not supported>      L1-icache-loads                                             
+    18.007289789 CPU21        <not supported>      L1-icache-loads                                             
+    18.007289789 CPU23        <not supported>      L1-icache-loads                                             
+    18.007289789 CPU19                  27655      L1-icache-load-misses                                         (33.59%)
+    18.007289789 CPU21                6743525      L1-icache-load-misses                                         (33.59%)
+    18.007289789 CPU23                  30457      L1-icache-load-misses                                         (33.59%)
+    18.007289789 CPU19               51927324      dTLB-loads                                                    (33.59%)
+    18.007289789 CPU21             2957500898      dTLB-loads                                                    (33.59%)
+    18.007289789 CPU23                 518480      dTLB-loads                                                    (33.59%)
+    18.007289789 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    18.007289789 CPU21                   7285      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    18.007289789 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    18.007289789 CPU19        <not supported>      iTLB-loads                                                  
+    18.007289789 CPU21        <not supported>      iTLB-loads                                                  
+    18.007289789 CPU23        <not supported>      iTLB-loads                                                  
+    18.007289789 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    18.007289789 CPU21                    848      iTLB-load-misses                                              (33.59%)
+    18.007289789 CPU23                    625      iTLB-load-misses                                              (33.59%)
+    18.007289789 CPU19        <not supported>      L1-dcache-prefetches                                        
+    18.007289789 CPU21        <not supported>      L1-dcache-prefetches                                        
+    18.007289789 CPU23        <not supported>      L1-dcache-prefetches                                        
+    18.007289789 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    18.007289789 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    18.007289789 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    19.007641327 CPU19                   8282      cache-references                                              (41.84%)
+    19.007641327 CPU21                 126633      cache-references                                              (41.84%)
+    19.007641327 CPU23                   4467      cache-references                                              (41.84%)
+    19.007641327 CPU19                   1386      cache-misses              #    0.047 % of all cache refs      (49.84%)
+    19.007641327 CPU21                    738      cache-misses              #    0.830 % of all cache refs      (49.84%)
+    19.007641327 CPU23                    140      cache-misses              #    2.211 % of all cache refs      (49.84%)
+    19.007641327 CPU19             2392350471      cycles                                                        (58.02%)
+    19.007641327 CPU21             2392278094      cycles                                                        (58.02%)
+    19.007641327 CPU23                5688628      cycles                                                        (58.02%)
+    19.007641327 CPU19              207389566      instructions              #    0.09  insn per cycle           (66.41%)
+    19.007641327 CPU21            10172182276      instructions              #    4.65  insn per cycle           (66.41%)
+    19.007641327 CPU23                1982913      instructions              #    0.35  insn per cycle           (66.41%)
+    19.007641327 CPU19               51925086      L1-dcache-loads                                               (66.41%)
+    19.007641327 CPU21             2950608546      L1-dcache-loads                                               (66.41%)
+    19.007641327 CPU23                 528923      L1-dcache-loads                                               (66.41%)
+    19.007641327 CPU19                   7807      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    19.007641327 CPU21                 348503      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    19.007641327 CPU23                   4322      L1-dcache-load-misses     #    0.82% of all L1-dcache hits    (66.41%)
+    19.007641327 CPU19                   2612      LLC-loads                                                     (66.41%)
+    19.007641327 CPU21                  26455      LLC-loads                                                     (66.41%)
+    19.007641327 CPU23                   2172      LLC-loads                                                     (66.41%)
+    19.007641327 CPU19                    212      LLC-load-misses           #    0.51% of all LL-cache hits     (66.41%)
+    19.007641327 CPU21                    170      LLC-load-misses           #    0.92% of all LL-cache hits     (66.41%)
+    19.007641327 CPU23                    138      LLC-load-misses           #    5.75% of all LL-cache hits     (66.41%)
+    19.007641327 CPU19        <not supported>      L1-icache-loads                                             
+    19.007641327 CPU21        <not supported>      L1-icache-loads                                             
+    19.007641327 CPU23        <not supported>      L1-icache-loads                                             
+    19.007641327 CPU19                  28028      L1-icache-load-misses                                         (33.59%)
+    19.007641327 CPU21                6725254      L1-icache-load-misses                                         (33.59%)
+    19.007641327 CPU23                  30555      L1-icache-load-misses                                         (33.59%)
+    19.007641327 CPU19               51929667      dTLB-loads                                                    (33.59%)
+    19.007641327 CPU21             2952375116      dTLB-loads                                                    (33.59%)
+    19.007641327 CPU23                 517718      dTLB-loads                                                    (33.59%)
+    19.007641327 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    19.007641327 CPU21                   7163      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    19.007641327 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    19.007641327 CPU19        <not supported>      iTLB-loads                                                  
+    19.007641327 CPU21        <not supported>      iTLB-loads                                                  
+    19.007641327 CPU23        <not supported>      iTLB-loads                                                  
+    19.007641327 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    19.007641327 CPU21                    842      iTLB-load-misses                                              (33.59%)
+    19.007641327 CPU23                    625      iTLB-load-misses                                              (33.59%)
+    19.007641327 CPU19        <not supported>      L1-dcache-prefetches                                        
+    19.007641327 CPU21        <not supported>      L1-dcache-prefetches                                        
+    19.007641327 CPU23        <not supported>      L1-dcache-prefetches                                        
+    19.007641327 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    19.007641327 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    19.007641327 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    20.007995397 CPU19                   9422      cache-references                                              (41.22%)
+    20.007995397 CPU21                 126911      cache-references                                              (41.22%)
+    20.007995397 CPU23                   5242      cache-references                                              (41.22%)
+    20.007995397 CPU19                   2222      cache-misses              #    0.079 % of all cache refs      (49.62%)
+    20.007995397 CPU21                    725      cache-misses              #    0.798 % of all cache refs      (49.62%)
+    20.007995397 CPU23                    517      cache-misses              #    8.234 % of all cache refs      (49.62%)
+    20.007995397 CPU19             2392305850      cycles                                                        (58.01%)
+    20.007995397 CPU21             2392244668      cycles                                                        (58.01%)
+    20.007995397 CPU23                5714016      cycles                                                        (58.01%)
+    20.007995397 CPU19              207379705      instructions              #    0.09  insn per cycle           (66.41%)
+    20.007995397 CPU21            10213129193      instructions              #    4.65  insn per cycle           (66.41%)
+    20.007995397 CPU23                1982319      instructions              #    0.35  insn per cycle           (66.41%)
+    20.007995397 CPU19               51921528      L1-dcache-loads                                               (66.41%)
+    20.007995397 CPU21             2963612424      L1-dcache-loads                                               (66.41%)
+    20.007995397 CPU23                 528308      L1-dcache-loads                                               (66.41%)
+    20.007995397 CPU19                   7905      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    20.007995397 CPU21                 341941      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    20.007995397 CPU23                   4589      L1-dcache-load-misses     #    0.87% of all L1-dcache hits    (66.41%)
+    20.007995397 CPU19                   2531      LLC-loads                                                     (66.52%)
+    20.007995397 CPU21                  25399      LLC-loads                                                     (66.52%)
+    20.007995397 CPU23                   2318      LLC-loads                                                     (66.52%)
+    20.007995397 CPU19                    146      LLC-load-misses           #    0.37% of all LL-cache hits     (66.92%)
+    20.007995397 CPU21                     64      LLC-load-misses           #    0.34% of all LL-cache hits     (66.92%)
+    20.007995397 CPU23                     59      LLC-load-misses           #    2.46% of all LL-cache hits     (66.92%)
+    20.007995397 CPU19        <not supported>      L1-icache-loads                                             
+    20.007995397 CPU21        <not supported>      L1-icache-loads                                             
+    20.007995397 CPU23        <not supported>      L1-icache-loads                                             
+    20.007995397 CPU19                  27818      L1-icache-load-misses                                         (33.59%)
+    20.007995397 CPU21                6693157      L1-icache-load-misses                                         (33.59%)
+    20.007995397 CPU23                  31510      L1-icache-load-misses                                         (33.59%)
+    20.007995397 CPU19               51931093      dTLB-loads                                                    (33.59%)
+    20.007995397 CPU21             2954870338      dTLB-loads                                                    (33.59%)
+    20.007995397 CPU23                 517996      dTLB-loads                                                    (33.59%)
+    20.007995397 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.48%)
+    20.007995397 CPU21                   6830      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.48%)
+    20.007995397 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.48%)
+    20.007995397 CPU19        <not supported>      iTLB-loads                                                  
+    20.007995397 CPU21        <not supported>      iTLB-loads                                                  
+    20.007995397 CPU23        <not supported>      iTLB-loads                                                  
+    20.007995397 CPU19                      0      iTLB-load-misses                                              (33.09%)
+    20.007995397 CPU21                    849      iTLB-load-misses                                              (33.09%)
+    20.007995397 CPU23                    619      iTLB-load-misses                                              (33.09%)
+    20.007995397 CPU19        <not supported>      L1-dcache-prefetches                                        
+    20.007995397 CPU21        <not supported>      L1-dcache-prefetches                                        
+    20.007995397 CPU23        <not supported>      L1-dcache-prefetches                                        
+    20.007995397 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    20.007995397 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    20.007995397 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    21.008342610 CPU19                  10958      cache-references                                              (41.22%)
+    21.008342610 CPU21                 125025      cache-references                                              (41.22%)
+    21.008342610 CPU23                   5824      cache-references                                              (41.22%)
+    21.008342610 CPU19                   4028      cache-misses              #    0.150 % of all cache refs      (49.62%)
+    21.008342610 CPU21                    888      cache-misses              #    0.960 % of all cache refs      (49.62%)
+    21.008342610 CPU23                    715      cache-misses              #   11.427 % of all cache refs      (49.62%)
+    21.008342610 CPU19             2392279535      cycles                                                        (58.01%)
+    21.008342610 CPU21             2392216778      cycles                                                        (58.01%)
+    21.008342610 CPU23                5919162      cycles                                                        (58.01%)
+    21.008342610 CPU19              207365171      instructions              #    0.09  insn per cycle           (66.41%)
+    21.008342610 CPU21            10160941543      instructions              #    4.61  insn per cycle           (66.41%)
+    21.008342610 CPU23                2003869      instructions              #    0.36  insn per cycle           (66.41%)
+    21.008342610 CPU19               51917265      L1-dcache-loads                                               (66.48%)
+    21.008342610 CPU21             2948174604      L1-dcache-loads                                               (66.48%)
+    21.008342610 CPU23                 528085      L1-dcache-loads                                               (66.48%)
+    21.008342610 CPU19                   9305      L1-dcache-load-misses     #    0.02% of all L1-dcache hits    (66.88%)
+    21.008342610 CPU21                 334917      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.88%)
+    21.008342610 CPU23                   4681      L1-dcache-load-misses     #    0.89% of all L1-dcache hits    (66.88%)
+    21.008342610 CPU19                   2947      LLC-loads                                                     (67.18%)
+    21.008342610 CPU21                  25201      LLC-loads                                                     (67.18%)
+    21.008342610 CPU23                   2616      LLC-loads                                                     (67.18%)
+    21.008342610 CPU19                    315      LLC-load-misses           #    0.84% of all LL-cache hits     (67.18%)
+    21.008342610 CPU21                     74      LLC-load-misses           #    0.39% of all LL-cache hits     (67.18%)
+    21.008342610 CPU23                    142      LLC-load-misses           #    5.90% of all LL-cache hits     (67.18%)
+    21.008342610 CPU19        <not supported>      L1-icache-loads                                             
+    21.008342610 CPU21        <not supported>      L1-icache-loads                                             
+    21.008342610 CPU23        <not supported>      L1-icache-loads                                             
+    21.008342610 CPU19                  29438      L1-icache-load-misses                                         (33.52%)
+    21.008342610 CPU21                6810821      L1-icache-load-misses                                         (33.52%)
+    21.008342610 CPU23                  31488      L1-icache-load-misses                                         (33.52%)
+    21.008342610 CPU19               51928903      dTLB-loads                                                    (33.12%)
+    21.008342610 CPU21             2958775602      dTLB-loads                                                    (33.12%)
+    21.008342610 CPU23                 533494      dTLB-loads                                                    (33.12%)
+    21.008342610 CPU19                      3      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+    21.008342610 CPU21                   7452      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+    21.008342610 CPU23                      3      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.82%)
+    21.008342610 CPU19        <not supported>      iTLB-loads                                                  
+    21.008342610 CPU21        <not supported>      iTLB-loads                                                  
+    21.008342610 CPU23        <not supported>      iTLB-loads                                                  
+    21.008342610 CPU19                      0      iTLB-load-misses                                              (32.82%)
+    21.008342610 CPU21                    889      iTLB-load-misses                                              (32.82%)
+    21.008342610 CPU23                    618      iTLB-load-misses                                              (32.82%)
+    21.008342610 CPU19        <not supported>      L1-dcache-prefetches                                        
+    21.008342610 CPU21        <not supported>      L1-dcache-prefetches                                        
+    21.008342610 CPU23        <not supported>      L1-dcache-prefetches                                        
+    21.008342610 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    21.008342610 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    21.008342610 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    22.008696443 CPU19                   8683      cache-references                                              (41.66%)
+    22.008696443 CPU21                 125331      cache-references                                              (41.66%)
+    22.008696443 CPU23                   5004      cache-references                                              (41.66%)
+    22.008696443 CPU19                   1809      cache-misses              #    0.070 % of all cache refs      (50.06%)
+    22.008696443 CPU21                    665      cache-misses              #    0.708 % of all cache refs      (50.06%)
+    22.008696443 CPU23                    399      cache-misses              #    6.435 % of all cache refs      (50.06%)
+    22.008696443 CPU19             2392258886      cycles                                                        (58.46%)
+    22.008696443 CPU21             2392177102      cycles                                                        (58.46%)
+    22.008696443 CPU23                5642440      cycles                                                        (58.46%)
+    22.008696443 CPU19              207364876      instructions              #    0.09  insn per cycle           (66.85%)
+    22.008696443 CPU21            10177049417      instructions              #    4.60  insn per cycle           (66.85%)
+    22.008696443 CPU23                1965866      instructions              #    0.35  insn per cycle           (66.85%)
+    22.008696443 CPU19               51916107      L1-dcache-loads                                               (67.18%)
+    22.008696443 CPU21             2953997290      L1-dcache-loads                                               (67.18%)
+    22.008696443 CPU23                 518511      L1-dcache-loads                                               (67.18%)
+    22.008696443 CPU19                   7414      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.18%)
+    22.008696443 CPU21                 335618      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (67.18%)
+    22.008696443 CPU23                   4087      L1-dcache-load-misses     #    0.78% of all L1-dcache hits    (67.18%)
+    22.008696443 CPU19                   2442      LLC-loads                                                     (67.14%)
+    22.008696443 CPU21                  24953      LLC-loads                                                     (67.14%)
+    22.008696443 CPU23                   2121      LLC-loads                                                     (67.14%)
+    22.008696443 CPU19                    149      LLC-load-misses           #    0.41% of all LL-cache hits     (66.74%)
+    22.008696443 CPU21                     59      LLC-load-misses           #    0.30% of all LL-cache hits     (66.74%)
+    22.008696443 CPU23                     64      LLC-load-misses           #    2.68% of all LL-cache hits     (66.74%)
+    22.008696443 CPU19        <not supported>      L1-icache-loads                                             
+    22.008696443 CPU21        <not supported>      L1-icache-loads                                             
+    22.008696443 CPU23        <not supported>      L1-icache-loads                                             
+    22.008696443 CPU19                  28114      L1-icache-load-misses                                         (32.82%)
+    22.008696443 CPU21                6707332      L1-icache-load-misses                                         (32.82%)
+    22.008696443 CPU23                  31027      L1-icache-load-misses                                         (32.82%)
+    22.008696443 CPU19               51928831      dTLB-loads                                                    (32.82%)
+    22.008696443 CPU21             2955931945      dTLB-loads                                                    (32.82%)
+    22.008696443 CPU23                 531678      dTLB-loads                                                    (32.82%)
+    22.008696443 CPU19                      3      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.86%)
+    22.008696443 CPU21                   7188      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.86%)
+    22.008696443 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (32.86%)
+    22.008696443 CPU19        <not supported>      iTLB-loads                                                  
+    22.008696443 CPU21        <not supported>      iTLB-loads                                                  
+    22.008696443 CPU23        <not supported>      iTLB-loads                                                  
+    22.008696443 CPU19                      0      iTLB-load-misses                                              (33.26%)
+    22.008696443 CPU21                    757      iTLB-load-misses                                              (33.26%)
+    22.008696443 CPU23                    625      iTLB-load-misses                                              (33.26%)
+    22.008696443 CPU19        <not supported>      L1-dcache-prefetches                                        
+    22.008696443 CPU21        <not supported>      L1-dcache-prefetches                                        
+    22.008696443 CPU23        <not supported>      L1-dcache-prefetches                                        
+    22.008696443 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    22.008696443 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    22.008696443 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    23.009017127 CPU19                   8174      cache-references                                              (41.99%)
+    23.009017127 CPU21                 125416      cache-references                                              (41.99%)
+    23.009017127 CPU23                   4475      cache-references                                              (41.99%)
+    23.009017127 CPU19                   1224      cache-misses              #    0.050 % of all cache refs      (50.38%)
+    23.009017127 CPU21                   1163      cache-misses              #    1.220 % of all cache refs      (50.38%)
+    23.009017127 CPU23                     53      cache-misses              #    0.865 % of all cache refs      (50.38%)
+    23.009017127 CPU19             2392246266      cycles                                                        (58.78%)
+    23.009017127 CPU21             2392176523      cycles                                                        (58.78%)
+    23.009017127 CPU23                5505152      cycles                                                        (58.78%)
+    23.009017127 CPU19              207374871      instructions              #    0.09  insn per cycle           (67.18%)
+    23.009017127 CPU21            10173443713      instructions              #    4.58  insn per cycle           (67.18%)
+    23.009017127 CPU23                1941194      instructions              #    0.34  insn per cycle           (67.18%)
+    23.009017127 CPU19               51920234      L1-dcache-loads                                               (67.17%)
+    23.009017127 CPU21             2950916175      L1-dcache-loads                                               (67.17%)
+    23.009017127 CPU23                 518166      L1-dcache-loads                                               (67.17%)
+    23.009017127 CPU19                   7590      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.77%)
+    23.009017127 CPU21                 349753      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.77%)
+    23.009017127 CPU23                   4126      L1-dcache-load-misses     #    0.79% of all L1-dcache hits    (66.77%)
+    23.009017127 CPU19                   2626      LLC-loads                                                     (66.41%)
+    23.009017127 CPU21                  27078      LLC-loads                                                     (66.41%)
+    23.009017127 CPU23                   2162      LLC-loads                                                     (66.41%)
+    23.009017127 CPU19                    197      LLC-load-misses           #    0.57% of all LL-cache hits     (66.41%)
+    23.009017127 CPU21                    251      LLC-load-misses           #    1.27% of all LL-cache hits     (66.41%)
+    23.009017127 CPU23                    114      LLC-load-misses           #    4.79% of all LL-cache hits     (66.41%)
+    23.009017127 CPU19        <not supported>      L1-icache-loads                                             
+    23.009017127 CPU21        <not supported>      L1-icache-loads                                             
+    23.009017127 CPU23        <not supported>      L1-icache-loads                                             
+    23.009017127 CPU19                  27940      L1-icache-load-misses                                         (32.83%)
+    23.009017127 CPU21                6777222      L1-icache-load-misses                                         (32.83%)
+    23.009017127 CPU23                  30685      L1-icache-load-misses                                         (32.83%)
+    23.009017127 CPU19               51926354      dTLB-loads                                                    (33.23%)
+    23.009017127 CPU21             2957542870      dTLB-loads                                                    (33.23%)
+    23.009017127 CPU23                 520677      dTLB-loads                                                    (33.23%)
+    23.009017127 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    23.009017127 CPU21                   8014      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    23.009017127 CPU23                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    23.009017127 CPU19        <not supported>      iTLB-loads                                                  
+    23.009017127 CPU21        <not supported>      iTLB-loads                                                  
+    23.009017127 CPU23        <not supported>      iTLB-loads                                                  
+    23.009017127 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    23.009017127 CPU21                    759      iTLB-load-misses                                              (33.59%)
+    23.009017127 CPU23                    616      iTLB-load-misses                                              (33.59%)
+    23.009017127 CPU19        <not supported>      L1-dcache-prefetches                                        
+    23.009017127 CPU21        <not supported>      L1-dcache-prefetches                                        
+    23.009017127 CPU23        <not supported>      L1-dcache-prefetches                                        
+    23.009017127 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    23.009017127 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    23.009017127 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    24.009339934 CPU19                   9150      cache-references                                              (41.99%)
+    24.009339934 CPU21                 128303      cache-references                                              (41.99%)
+    24.009339934 CPU23                   5032      cache-references                                              (41.99%)
+    24.009339934 CPU19                   2373      cache-misses              #    0.101 % of all cache refs      (50.38%)
+    24.009339934 CPU21                    601      cache-misses              #    0.621 % of all cache refs      (50.38%)
+    24.009339934 CPU23                    184      cache-misses              #    3.027 % of all cache refs      (50.38%)
+    24.009339934 CPU19             2392253187      cycles                                                        (58.78%)
+    24.009339934 CPU21             2392193082      cycles                                                        (58.78%)
+    24.009339934 CPU23                5590523      cycles                                                        (58.78%)
+    24.009339934 CPU19              207366820      instructions              #    0.09  insn per cycle           (66.80%)
+    24.009339934 CPU21            10214529953      instructions              #    4.58  insn per cycle           (66.80%)
+    24.009339934 CPU23                1951684      instructions              #    0.35  insn per cycle           (66.80%)
+    24.009339934 CPU19               51919200      L1-dcache-loads                                               (66.41%)
+    24.009339934 CPU21             2956717552      L1-dcache-loads                                               (66.41%)
+    24.009339934 CPU23                 526924      L1-dcache-loads                                               (66.41%)
+    24.009339934 CPU19                   8320      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    24.009339934 CPU21                 340320      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    24.009339934 CPU23                   4436      L1-dcache-load-misses     #    0.84% of all L1-dcache hits    (66.41%)
+    24.009339934 CPU19                   2644      LLC-loads                                                     (66.41%)
+    24.009339934 CPU21                  25570      LLC-loads                                                     (66.41%)
+    24.009339934 CPU23                   2341      LLC-loads                                                     (66.41%)
+    24.009339934 CPU19                    234      LLC-load-misses           #    0.70% of all LL-cache hits     (66.41%)
+    24.009339934 CPU21                    141      LLC-load-misses           #    0.71% of all LL-cache hits     (66.41%)
+    24.009339934 CPU23                    147      LLC-load-misses           #    6.18% of all LL-cache hits     (66.41%)
+    24.009339934 CPU19        <not supported>      L1-icache-loads                                             
+    24.009339934 CPU21        <not supported>      L1-icache-loads                                             
+    24.009339934 CPU23        <not supported>      L1-icache-loads                                             
+    24.009339934 CPU19                  27312      L1-icache-load-misses                                         (33.59%)
+    24.009339934 CPU21                6777369      L1-icache-load-misses                                         (33.59%)
+    24.009339934 CPU23                  30676      L1-icache-load-misses                                         (33.59%)
+    24.009339934 CPU19               51925561      dTLB-loads                                                    (33.59%)
+    24.009339934 CPU21             2957387688      dTLB-loads                                                    (33.59%)
+    24.009339934 CPU23                 522459      dTLB-loads                                                    (33.59%)
+    24.009339934 CPU19                      0      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    24.009339934 CPU21                   6915      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    24.009339934 CPU23                     17      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    24.009339934 CPU19        <not supported>      iTLB-loads                                                  
+    24.009339934 CPU21        <not supported>      iTLB-loads                                                  
+    24.009339934 CPU23        <not supported>      iTLB-loads                                                  
+    24.009339934 CPU19                      0      iTLB-load-misses                                              (33.59%)
+    24.009339934 CPU21                    979      iTLB-load-misses                                              (33.59%)
+    24.009339934 CPU23                    631      iTLB-load-misses                                              (33.59%)
+    24.009339934 CPU19        <not supported>      L1-dcache-prefetches                                        
+    24.009339934 CPU21        <not supported>      L1-dcache-prefetches                                        
+    24.009339934 CPU23        <not supported>      L1-dcache-prefetches                                        
+    24.009339934 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    24.009339934 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    24.009339934 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
+    25.009655176 CPU19                  10003      cache-references                                              (41.99%)
+    25.009655176 CPU21                 127109      cache-references                                              (41.99%)
+    25.009655176 CPU23                   5415      cache-references                                              (41.99%)
+    25.009655176 CPU19                   3095      cache-misses              #    0.137 % of all cache refs      (50.04%)
+    25.009655176 CPU21                    373      cache-misses              #    0.381 % of all cache refs      (50.04%)
+    25.009655176 CPU23                    289      cache-misses              #    4.774 % of all cache refs      (50.04%)
+    25.009655176 CPU19             2392267810      cycles                                                        (58.04%)
+    25.009655176 CPU21             2392208735      cycles                                                        (58.04%)
+    25.009655176 CPU23                5680574      cycles                                                        (58.04%)
+    25.009655176 CPU19              207365488      instructions              #    0.09  insn per cycle           (66.41%)
+    25.009655176 CPU21            10200959412      instructions              #    4.56  insn per cycle           (66.41%)
+    25.009655176 CPU23                1986397      instructions              #    0.35  insn per cycle           (66.41%)
+    25.009655176 CPU19               51917579      L1-dcache-loads                                               (66.41%)
+    25.009655176 CPU21             2956105171      L1-dcache-loads                                               (66.41%)
+    25.009655176 CPU23                 529501      L1-dcache-loads                                               (66.41%)
+    25.009655176 CPU19                   9043      L1-dcache-load-misses     #    0.02% of all L1-dcache hits    (66.41%)
+    25.009655176 CPU21                 338558      L1-dcache-load-misses     #    0.01% of all L1-dcache hits    (66.41%)
+    25.009655176 CPU23                   4800      L1-dcache-load-misses     #    0.91% of all L1-dcache hits    (66.41%)
+    25.009655176 CPU19                   2839      LLC-loads                                                     (66.41%)
+    25.009655176 CPU21                  25310      LLC-loads                                                     (66.41%)
+    25.009655176 CPU23                   2671      LLC-loads                                                     (66.41%)
+    25.009655176 CPU19                    323      LLC-load-misses           #    1.01% of all LL-cache hits     (66.41%)
+    25.009655176 CPU21                    164      LLC-load-misses           #    0.81% of all LL-cache hits     (66.41%)
+    25.009655176 CPU23                    207      LLC-load-misses           #    8.65% of all LL-cache hits     (66.41%)
+    25.009655176 CPU19        <not supported>      L1-icache-loads                                             
+    25.009655176 CPU21        <not supported>      L1-icache-loads                                             
+    25.009655176 CPU23        <not supported>      L1-icache-loads                                             
+    25.009655176 CPU19                  27961      L1-icache-load-misses                                         (33.59%)
+    25.009655176 CPU21                6759413      L1-icache-load-misses                                         (33.59%)
+    25.009655176 CPU23                  30891      L1-icache-load-misses                                         (33.59%)
+    25.009655176 CPU19               51926960      dTLB-loads                                                    (33.59%)
+    25.009655176 CPU21             2959657208      dTLB-loads                                                    (33.59%)
+    25.009655176 CPU23                 520990      dTLB-loads                                                    (33.59%)
+    25.009655176 CPU19                     41      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    25.009655176 CPU21                   7425      dTLB-load-misses          #    0.00% of all dTLB cache hits   (33.59%)
+    25.009655176 CPU23                     62      dTLB-load-misses          #    0.01% of all dTLB cache hits   (33.59%)
+    25.009655176 CPU19        <not supported>      iTLB-loads                                                  
+    25.009655176 CPU21        <not supported>      iTLB-loads                                                  
+    25.009655176 CPU23        <not supported>      iTLB-loads                                                  
+    25.009655176 CPU19                     17      iTLB-load-misses                                              (33.59%)
+    25.009655176 CPU21                   1000      iTLB-load-misses                                              (33.59%)
+    25.009655176 CPU23                    628      iTLB-load-misses                                              (33.59%)
+    25.009655176 CPU19        <not supported>      L1-dcache-prefetches                                        
+    25.009655176 CPU21        <not supported>      L1-dcache-prefetches                                        
+    25.009655176 CPU23        <not supported>      L1-dcache-prefetches                                        
+    25.009655176 CPU19        <not supported>      L1-dcache-prefetch-misses                                   
+    25.009655176 CPU21        <not supported>      L1-dcache-prefetch-misses                                   
+    25.009655176 CPU23        <not supported>      L1-dcache-prefetch-misses                                   
