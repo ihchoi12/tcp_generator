@@ -1,4 +1,7 @@
 # Build Artifacts
 build/
 *.dat
+scripts/output*
+scripts/plot*
+scripts/results*
 percentile
