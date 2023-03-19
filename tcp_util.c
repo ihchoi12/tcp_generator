@@ -26,7 +26,7 @@ void init_tcp_blocks() {
 		ports[i] = rte_cpu_to_be_16((i % (nr_flows/nr_servers)) + 1);
 	}
 	// shuffle port array
-	shuffle(ports, nr_flows);
+	// shuffle(ports, nr_flows);
 
 	for(uint32_t i = 0; i < nr_flows; i++) {
 		rte_atomic16_init(&tcp_control_blocks[i].tcb_state);
