@@ -84,7 +84,6 @@ void create_interarrival_array() {
 
 // Allocate and create an array for all flow indentier to send to the server
 void create_flow_indexes_array() {
-	uint32_t nbits = (uint32_t) log2(nr_queues);
 	uint64_t rate_per_queue = rate/nr_queues;
 	uint64_t nr_elements_per_queue = 2 * rate_per_queue * duration;
 
@@ -93,14 +92,24 @@ void create_flow_indexes_array() {
 		rte_exit(EXIT_FAILURE, "Cannot alloc the flow_indexes array.\n");
 	}
 
-	for(uint64_t i = 0; i < nr_queues; i++) {
-		flow_indexes_array[i] = (uint16_t*) malloc(nr_elements_per_queue * sizeof(uint16_t));
-		if(flow_indexes_array[i] == NULL) {
+	for(uint64_t q = 0; q < nr_queues; q++) {
+		flow_indexes_array[q] = (uint16_t*) malloc(nr_elements_per_queue * sizeof(uint16_t));
+		if(flow_indexes_array[q] == NULL) {
 			rte_exit(EXIT_FAILURE, "Cannot alloc the flow_indexes array.\n");
 		}
-		uint16_t *flow_indexes = flow_indexes_array[i];
-		for(int j = 0; j < nr_elements_per_queue; j++) {
-			flow_indexes[j] = ((rte_rand() << nbits) | i) % nr_flows;
+	}
+
+	uint32_t last[nr_queues];
+	memset(last, 0, nr_queues * sizeof(uint32_t));
+
+	for(uint64_t f = 0; f < nr_flows; f++) {
+		uint32_t idx = f % nr_queues;
+		flow_indexes_array[idx][last[idx]++] = f;
+	}
+
+	for(uint64_t q = 0; q < nr_queues; q++) {
+		for(uint32_t i = last[q]; i < nr_elements_per_queue; i++) {
+			flow_indexes_array[q][i] = flow_indexes_array[q][i % last[q]];
 		}
 	}
 }
