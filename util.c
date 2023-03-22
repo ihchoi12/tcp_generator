@@ -22,19 +22,19 @@ void allocate_incoming_nodes() {
 	uint64_t rate_per_queue = rate/nr_queues;
 	uint64_t nr_elements_per_queue = (2 * rate_per_queue * duration) * 1.2;
 
-	incoming_array = (node_t**) malloc(nr_queues * sizeof(node_t*));
+	incoming_array = (node_t**) rte_malloc(NULL, nr_queues * sizeof(node_t*), 64);
 	if(incoming_array == NULL) {
 		rte_exit(EXIT_FAILURE, "Cannot alloc the incoming array.\n");
 	}
 
 	for(uint64_t i = 0; i < nr_queues; i++) {
-		incoming_array[i] = (node_t*) malloc(nr_elements_per_queue * sizeof(node_t));
+		incoming_array[i] = (node_t*) rte_malloc(NULL, nr_elements_per_queue * sizeof(node_t), 64);
 		if(incoming_array[i] == NULL) {
 			rte_exit(EXIT_FAILURE, "Cannot alloc the incoming array.\n");
 		}
 	}
 
-	incoming_idx_array = (uint64_t*) malloc(nr_queues * sizeof(uint64_t));
+	incoming_idx_array = (uint64_t*) rte_malloc(NULL, nr_queues * sizeof(uint64_t), 64);
 	if(incoming_idx_array == NULL) {
 		rte_exit(EXIT_FAILURE, "Cannot alloc the incoming_idx array.\n");
 	}
@@ -91,7 +91,6 @@ void create_interarrival_array() {
 
 // Allocate and create an array for all flow indentier to send to the server
 void create_flow_indexes_array() {
-	uint32_t nbits = (uint32_t) log2(nr_queues);
 	uint64_t rate_per_queue = rate/nr_queues;
 	uint64_t nr_elements_per_queue = 2 * rate_per_queue * duration;
 
@@ -105,17 +104,27 @@ void create_flow_indexes_array() {
 		if(flow_indexes_array[i] == NULL) {
 			rte_exit(EXIT_FAILURE, "Cannot alloc the flow_indexes array.\n");
 		}
-		uint16_t *flow_indexes = flow_indexes_array[i];
-		for(int j = 0; j < nr_elements_per_queue; j++) {
-			flow_indexes[j] = ((rte_rand() << nbits) | i) % nr_flows;
+	}
+
+	uint32_t last[nr_queues];
+	memset(last, 0, nr_queues * sizeof(uint32_t));
+
+	for(uint64_t f = 0; f < nr_flows; f++) {
+		uint32_t idx = f % nr_queues;
+		flow_indexes_array[idx][last[idx]++] = f;
+	}
+
+	for(uint64_t q = 0; q < nr_queues; q++) {
+		for(uint32_t i = last[q]; i < nr_elements_per_queue; i++) {
+			flow_indexes_array[q][i] = flow_indexes_array[q][i % last[q]];
 		}
 	}
 }
 
 // Clean up all allocate structures
 void clean_heap() {
-	free(incoming_array);
-	free(incoming_idx_array);
+	rte_free(incoming_array);
+	rte_free(incoming_idx_array);
 	rte_free(flow_indexes_array);
 	rte_free(interarrival_array);
 }

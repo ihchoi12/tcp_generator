@@ -1,12 +1,14 @@
 #!/bin/bash
 
 SEED_LIST=(1646203793 986508091 193720917 15335381 633882127 1093215650 772188468 711307909 645856549 1127581467 765061083 1050115427 4231379 1000215989 1382853168 1927405477 306097907 1344972625 2098183364 323989894)
-PLACEMENTS=(i4 i8 d4_22_ns d4_22_ns_N d4_13_ns d4_13_ns_N d8_44_s d8_44_ns d8_44_ns_N d8_26_ns d8_26_ns_N)
+#PLACEMENTS=(i4 i8 d4_22_ns d4_22_ns_N d4_13_ns d4_13_ns_N d8_44_s d8_44_ns d8_44_ns_N d8_26_ns d8_26_ns_N)
+PLACEMENTS=(d4_13_ns_N)
 WORKLOADS=(w0)
-ITERATIONS=(50000)
-RATES=(10000 20000 30000 40000 50000 60000 70000 80000 90000 100000 110000)
+#ITERATIONS=(50000)
+#RATES=(10000 20000 30000 40000 50000 60000 70000 80000 90000 100000 110000)
 
-#RATES=(200000 400000 600000 800000 1000000 1200000 1400000 1600000 1800000 2000000)
+ITERATIONS=(500)
+RATES=(400000 600000 800000 1000000 1200000 1400000 1600000 1800000 2000000 2200000)
 
 CLI_DURATION=10
 PERCENTILE_1="50.0"
@@ -18,7 +20,7 @@ CLI_CORES="19,21,23,25,27,29,31,33,35,37,39"
 SERVER_IP="130.127.134.50"
 
 OUTPUT_FILE="output.dat"
-SRV_TIMEOUT=25
+SRV_TIMEOUT=27
 TIMEOUT=$(( SRV_TIMEOUT - CLI_DURATION - CLI_DURATION ))
 
 error () {
@@ -62,7 +64,6 @@ for p in ${PLACEMENTS[@]}; do
                 fi
 
                 DIR="results_4c/${p}_${w}_${d}/$r"
-                rm -rf $DIR 1>/dev/null 2>/dev/null
                 mkdir -p $DIR 1>/dev/null 2>/dev/null
 
                 for j in `seq 0 $RUNS`; do
@@ -73,7 +74,7 @@ for p in ${PLACEMENTS[@]}; do
                     ssh ${SERVER_IP} "cd ${SRV_ARCH}/demikernel; sh ./run_server.sh '${SRV_CORES}' '${SRV_ARGS}'" 1>/dev/null 2>/dev/null &
 
                     # Sleep a while for finish the server
-                    sleep 4
+                    sleep 5
                     SEED=${SEED_LIST[j]}
 
                     # Run the generator
