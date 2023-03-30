@@ -268,4 +268,14 @@ inline void fill_tcp_payload(uint8_t *payload, uint32_t length) {
 	for(uint32_t i = 0; i < length; i++) {
 		payload[i] = rte_rand();
 	}
+
+	uint64_t instructions;
+	if (srv_distribution == UNIFORM_VALUE) {
+		instructions = srv_instructions;
+	} else {
+		double z = (double)rand() / RAND_MAX;
+		instructions = (uint64_t) (-((double)srv_instructions) * log(z));
+	}
+
+	((uint64_t*) payload)[4] = instructions;
 }

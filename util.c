@@ -139,6 +139,8 @@ static void usage(const char *prgname) {
 		"  -t TIME: time in seconds to send packets\n"
 		"  -q QUEUES: number of queues\n"
 		"  -e SEED: seed\n"
+		"  -i INSTRUCTIONS: number of instructions on the server\n"
+		"  -j DISTRIBUTION: <uniform|exponential> on the server\n"
 		"  -n SERVERS: number of servers\n"
 		"  -c FILENAME: name of the configuration file\n"
 		"  -o FILENAME: name of the output file\n",
@@ -153,7 +155,7 @@ int app_parse_args(int argc, char **argv) {
 	char *prgname = argv[0];
 
 	argvopt = argv;
-	while ((opt = getopt(argc, argvopt, "d:r:f:s:q:p:t:c:o:e:n:")) != EOF) {
+	while ((opt = getopt(argc, argvopt, "d:r:f:s:q:p:t:c:o:e:n:i:j:")) != EOF) {
 		switch (opt) {
 		// distribution
 		case 'd':
@@ -168,7 +170,26 @@ int app_parse_args(int argc, char **argv) {
 				rte_exit(EXIT_FAILURE, "Invalid arguments.\n");
 			}
 			break;
+
+		// distribution on the server
+		case 'j':
+			if(strcmp(optarg, "uniform") == 0) {
+				// Uniform distribution
+				srv_distribution = UNIFORM_VALUE;
+			} else if(strcmp(optarg, "exponential") == 0) {
+				// Exponential distribution
+				srv_distribution = EXPONENTIAL_VALUE;
+			} else {
+				usage(prgname);
+				rte_exit(EXIT_FAILURE, "Invalid arguments.\n");
+			}
+			break;
 			
+		// instructions on the server
+		case 'i':
+			srv_instructions = process_int_arg(optarg);
+			break;
+
 		// rate (pps)
 		case 'r':
 			rate = process_int_arg(optarg);

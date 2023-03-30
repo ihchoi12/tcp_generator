@@ -55,6 +55,9 @@ extern uint32_t frame_size;
 extern uint32_t min_lcores;
 extern uint32_t tcp_payload_size;
 
+extern uint64_t srv_distribution;
+extern uint64_t srv_instructions;
+
 extern uint64_t TICKS_PER_US;
 extern uint16_t **flow_indexes_array;
 extern uint64_t **interarrival_array;

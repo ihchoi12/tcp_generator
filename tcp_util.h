@@ -1,6 +1,7 @@
 #ifndef __TCP_UTIL_H__
 #define __TCP_UTIL_H__
 
+#include <math.h>
 #include <stdint.h>
 
 #include <rte_ip.h>
@@ -15,6 +16,9 @@
 #include <rte_ethdev.h>
 #include <rte_malloc.h>
 #include <rte_mempool.h>
+
+#define UNIFORM_VALUE				0
+#define EXPONENTIAL_VALUE			1
 
 // TCP State enum
 typedef enum {
@@ -75,6 +79,9 @@ extern uint32_t dst_ipv4_addr;
 extern uint32_t src_ipv4_addr;
 extern struct rte_ether_addr dst_eth_addr;
 extern struct rte_ether_addr src_eth_addr;
+
+extern uint64_t srv_distribution;
+extern uint64_t srv_instructions;
 
 extern uint64_t nr_flows;
 extern uint64_t nr_queues;

@@ -23,6 +23,10 @@ uint32_t min_lcores;
 uint32_t frame_size;
 uint32_t tcp_payload_size;
 
+// Server parameters
+uint64_t srv_distribution;
+uint64_t srv_instructions;
+
 // General variables
 uint64_t TICKS_PER_US;
 uint16_t **flow_indexes_array;

@@ -22,7 +22,7 @@ static: build/$(APP)-static
 PKGCONF ?= pkg-config
 
 PC_FILE := $(shell $(PKGCONF) --path libdpdk 2>/dev/null)
-CFLAGS += -O3 $(shell $(PKGCONF) --cflags libdpdk)
+CFLAGS += -O3 -lm $(shell $(PKGCONF) --cflags libdpdk)
 LDFLAGS_SHARED = $(shell $(PKGCONF) --libs libdpdk)
 LDFLAGS_STATIC = $(shell $(PKGCONF) --static --libs libdpdk)
 
@@ -38,9 +38,11 @@ CFLAGS += -DALLOW_EXPERIMENTAL_API -Wall
 
 build/$(APP)-shared: $(SRCS-y) Makefile $(PC_FILE) | build
 	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@ $(LDFLAGS) $(LDFLAGS_SHARED) -lm
+	gcc percentile.c -o percentile -O2 -Wall
 
 build/$(APP)-static: $(SRCS-y) Makefile $(PC_FILE) | build
 	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@ $(LDFLAGS) $(LDFLAGS_SHARED) -lm
+	gcc percentile.c -o percentile -O2 -Wall
 
 build:
 	@mkdir -p $@
