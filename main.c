@@ -18,7 +18,6 @@ uint32_t seed;
 uint64_t duration;
 uint64_t nr_flows;
 uint64_t nr_queues;
-uint16_t nr_servers;
 uint32_t min_lcores;
 uint32_t frame_size;
 uint32_t tcp_payload_size;
@@ -31,6 +30,9 @@ uint64_t srv_instructions;
 uint64_t TICKS_PER_US;
 uint16_t **flow_indexes_array;
 uint64_t **interarrival_array;
+//
+uint64_t **randomness_array;
+uint64_t **instructions_array;
 
 // Heap and DPDK allocated
 node_t **incoming_array;
@@ -268,6 +270,10 @@ static int lcore_tx(void *arg) {
 	struct rte_mbuf *pkts[BURST_SIZE];
 	uint16_t *flow_indexes = flow_indexes_array[qid];
 	uint64_t *interarrival_gap = interarrival_array[qid];
+
+	uint64_t *randomness = randomness_array[qid];
+	uint64_t *instructions = instructions_array[qid];
+
 	uint64_t next_tsc = rte_rdtsc() + interarrival_gap[0];
 
 	for(uint64_t i = 0; i < nr_elements; i++) {
@@ -296,9 +302,11 @@ static int lcore_tx(void *arg) {
 		// fill the timestamp into the packet payload
 		fill_payload_pkt(pkts[0], 0, next_tsc);
 		fill_payload_pkt(pkts[0], 2, flow_id);
+		fill_payload_pkt(pkts[0], 4, instructions[i]);
+		fill_payload_pkt(pkts[0], 5, randomness[i]);
 
 		// sleep for while
-		while (rte_rdtsc() < next_tsc) {  }
+		while (rte_rdtsc() < next_tsc) { }
 
 		// send the packet
 		rte_eth_tx_burst(portid, qid, pkts, 1);

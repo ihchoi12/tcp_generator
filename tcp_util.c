@@ -23,10 +23,8 @@ void init_tcp_blocks() {
 	uint16_t src_tcp_port;
 	uint16_t ports[nr_flows];
 	for(uint32_t i = 0; i < nr_flows; i++) {
-		ports[i] = rte_cpu_to_be_16((i % (nr_flows/nr_servers)) + 1);
+		ports[i] = rte_cpu_to_be_16((i % nr_flows) + 1);
 	}
-	// shuffle port array
-	// shuffle(ports, nr_flows);
 
 	for(uint32_t i = 0; i < nr_flows; i++) {
 		rte_atomic16_init(&tcp_control_blocks[i].tcb_state);
@@ -39,7 +37,7 @@ void init_tcp_blocks() {
 		tcp_control_blocks[i].dst_addr = dst_ipv4_addr;
 
 		tcp_control_blocks[i].src_port = src_tcp_port;
-		tcp_control_blocks[i].dst_port = rte_cpu_to_be_16(dst_tcp_port + (i % nr_servers));
+		tcp_control_blocks[i].dst_port = rte_cpu_to_be_16(dst_tcp_port);
 
 		uint32_t seq = rte_rand();
 		tcp_control_blocks[i].tcb_seq_ini = seq;
@@ -255,8 +253,8 @@ void fill_tcp_packet(tcp_control_block_t *block, struct rte_mbuf *pkt) {
 	block->tcb_next_seq = sent_seq;
 
 	// fill the payload of the packet
-	uint8_t *payload = ((uint8_t*)tcp_hdr) + sizeof(struct rte_tcp_hdr);
-	fill_tcp_payload(payload, tcp_payload_size);
+	// uint8_t *payload = ((uint8_t*)tcp_hdr) + sizeof(struct rte_tcp_hdr);
+	// fill_tcp_payload(payload, tcp_payload_size);
 
 	// fill the packet size
 	pkt->data_len = frame_size;
@@ -268,14 +266,4 @@ inline void fill_tcp_payload(uint8_t *payload, uint32_t length) {
 	for(uint32_t i = 0; i < length; i++) {
 		payload[i] = rte_rand();
 	}
-
-	uint64_t instructions;
-	if (srv_distribution == UNIFORM_VALUE) {
-		instructions = srv_instructions;
-	} else {
-		double z = (double)rand() / RAND_MAX;
-		instructions = (uint64_t) (-((double)srv_instructions) * log(z));
-	}
-
-	((uint64_t*) payload)[4] = instructions;
 }

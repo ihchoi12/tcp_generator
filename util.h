@@ -29,6 +29,8 @@
 #define EXPONENTIAL_VALUE			1
 #define IPV4_ADDR(a, b, c, d)		(((d & 0xff) << 24) | ((c & 0xff) << 16) | ((b & 0xff) << 8) | (a & 0xff))
 
+#define PAYLOAD_OFFSET				14+20+20
+
 typedef struct lcore_parameters {
 	uint8_t qid;
 	uint16_t portid;
@@ -50,7 +52,6 @@ extern uint16_t portid;
 extern uint64_t duration;
 extern uint64_t nr_flows;
 extern uint64_t nr_queues;
-extern uint16_t nr_servers;
 extern uint32_t frame_size;
 extern uint32_t min_lcores;
 extern uint32_t tcp_payload_size;
@@ -61,6 +62,8 @@ extern uint64_t srv_instructions;
 extern uint64_t TICKS_PER_US;
 extern uint16_t **flow_indexes_array;
 extern uint64_t **interarrival_array;
+extern uint64_t **randomness_array;
+extern uint64_t **instructions_array;
 extern volatile uint64_t *nr_never_sent;
 extern struct rte_mempool *pktmbuf_pool;
 

@@ -44,6 +44,8 @@ typedef struct tcp_control_block_s {
 	uint32_t 						dst_addr;
 	uint16_t						src_port;
 	uint16_t						dst_port;
+	uint64_t						instructions;
+	double							randomness;
 
 	// used only by the RX
 	uint32_t						last_ack_recv;
@@ -85,7 +87,6 @@ extern uint64_t srv_instructions;
 
 extern uint64_t nr_flows;
 extern uint64_t nr_queues;
-extern uint16_t nr_servers;
 extern uint32_t frame_size;
 extern uint32_t tcp_payload_size;
 extern struct rte_mempool *pktmbuf_pool;

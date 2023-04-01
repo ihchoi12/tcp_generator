@@ -99,10 +99,30 @@ void create_flow_indexes_array() {
 		rte_exit(EXIT_FAILURE, "Cannot alloc the flow_indexes array.\n");
 	}
 
+	randomness_array = (uint64_t**) rte_malloc(NULL, nr_queues * sizeof(uint64_t*), 64);
+	if(randomness_array == NULL) {
+		rte_exit(EXIT_FAILURE, "Cannot alloc the randomness array.\n");
+	}
+
+	instructions_array = (uint64_t**) rte_malloc(NULL, nr_queues * sizeof(uint64_t*), 64);
+	if(instructions_array == NULL) {
+		rte_exit(EXIT_FAILURE, "Cannot alloc the instructions array.\n");
+	}
+
 	for(uint64_t i = 0; i < nr_queues; i++) {
 		flow_indexes_array[i] = (uint16_t*) rte_malloc(NULL, nr_elements_per_queue * sizeof(uint16_t), 64);
 		if(flow_indexes_array[i] == NULL) {
 			rte_exit(EXIT_FAILURE, "Cannot alloc the flow_indexes array.\n");
+		}
+
+		randomness_array[i] = (uint64_t*) rte_malloc(NULL, nr_elements_per_queue * sizeof(uint64_t), 64);
+		if(randomness_array[i] == NULL) {
+			rte_exit(EXIT_FAILURE, "Cannot alloc the randomness array.\n");
+		}
+
+		instructions_array[i] = (uint64_t*) rte_malloc(NULL, nr_elements_per_queue * sizeof(uint64_t), 64);
+		if(instructions_array[i] == NULL) {
+			rte_exit(EXIT_FAILURE, "Cannot alloc the instructions array.\n");
 		}
 	}
 
@@ -118,6 +138,18 @@ void create_flow_indexes_array() {
 		for(uint32_t i = last[q]; i < nr_elements_per_queue; i++) {
 			flow_indexes_array[q][i] = flow_indexes_array[q][i % last[q]];
 		}
+
+		for(uint32_t i = 0; i < nr_elements_per_queue; i++) {
+			randomness_array[q][i] = rte_rand();
+			uint64_t instructions;
+			if (srv_distribution == UNIFORM_VALUE) {
+				instructions = srv_instructions;
+			} else {
+				double z = rte_drand();
+				instructions = (uint64_t) (-((double)srv_instructions) * log(z));
+			}
+			instructions_array[q][i] = instructions;
+		}
 	}
 }
 
@@ -127,6 +159,8 @@ void clean_heap() {
 	rte_free(incoming_idx_array);
 	rte_free(flow_indexes_array);
 	rte_free(interarrival_array);
+	rte_free(randomness_array);
+	rte_free(instructions_array);
 }
 
 // Usage message
@@ -141,7 +175,6 @@ static void usage(const char *prgname) {
 		"  -e SEED: seed\n"
 		"  -i INSTRUCTIONS: number of instructions on the server\n"
 		"  -j DISTRIBUTION: <uniform|exponential> on the server\n"
-		"  -n SERVERS: number of servers\n"
 		"  -c FILENAME: name of the configuration file\n"
 		"  -o FILENAME: name of the output file\n",
 		prgname
@@ -155,7 +188,7 @@ int app_parse_args(int argc, char **argv) {
 	char *prgname = argv[0];
 
 	argvopt = argv;
-	while ((opt = getopt(argc, argvopt, "d:r:f:s:q:p:t:c:o:e:n:i:j:")) != EOF) {
+	while ((opt = getopt(argc, argvopt, "d:r:f:s:q:p:t:c:o:e:i:j:")) != EOF) {
 		switch (opt) {
 		// distribution
 		case 'd':
@@ -223,11 +256,6 @@ int app_parse_args(int argc, char **argv) {
 		// seed
 		case 'e':
 			seed = process_int_arg(optarg);
-			break;
-
-		// number of servers
-		case 'n':
-			nr_servers = process_int_arg(optarg);
 			break;
 
 		// config file name
@@ -362,7 +390,7 @@ void process_config_file(char *cfg_file) {
 
 // Fill the data into packet payload properly
 inline void fill_payload_pkt(struct rte_mbuf *pkt, uint32_t idx, uint64_t value) {
-	uint8_t *payload = (uint8_t*) rte_pktmbuf_mtod_offset(pkt, uint8_t*, sizeof(struct rte_ether_hdr) + sizeof(struct rte_ipv4_hdr) + sizeof(struct rte_tcp_hdr));
+	uint8_t *payload = (uint8_t*) rte_pktmbuf_mtod_offset(pkt, uint8_t*, PAYLOAD_OFFSET);
 
 	((uint64_t*) payload)[idx] = value;
 }
