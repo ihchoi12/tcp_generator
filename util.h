@@ -44,6 +44,8 @@ typedef struct timestamp_node_t {
 	uint64_t ack_empty;
 	uint64_t timestamp_rx;
 	uint64_t timestamp_tx;
+	uint64_t sequence_nr;
+	uint64_t batch_size;
 } node_t;
 
 extern uint64_t rate;
@@ -59,6 +61,7 @@ extern uint32_t tcp_payload_size;
 extern uint64_t srv_distribution;
 extern uint64_t srv_instructions;
 
+extern double TICKS_PER_NS;
 extern uint64_t TICKS_PER_US;
 extern uint16_t **flow_indexes_array;
 extern uint64_t **interarrival_array;

@@ -8,10 +8,11 @@ void init_DPDK(uint16_t portid, uint64_t nr_queues, uint32_t seed) {
 	}
 
 	// init the seed for random numbers
-	rte_srand(SEED);
+	rte_srand(seed);
 
 	// get the number of cycles per us
 	TICKS_PER_US = rte_get_timer_hz() / 1000000;
+	TICKS_PER_NS = ((double) TICKS_PER_US)/1000.0;
 
 	// flush all flows of the NIC
 	struct rte_flow_error error;
@@ -41,6 +42,12 @@ int init_DPDK_port(uint16_t portid, uint16_t nb_rx_queue, uint16_t nb_tx_queue, 
 	uint16_t nb_rxd = 256;
 	uint16_t nb_txd = 1024;
 
+	struct rte_eth_dev_info dev_info;
+	int retval = rte_eth_dev_info_get(portid, &dev_info);
+	if(retval != 0) {
+		return retval;
+	}
+
 	// get default port_conf
 	struct rte_eth_conf port_conf = {
 		.rxmode = {
@@ -56,12 +63,12 @@ int init_DPDK_port(uint16_t portid, uint16_t nb_rx_queue, uint16_t nb_tx_queue, 
 		},
 		.txmode = {
 			.mq_mode = RTE_ETH_MQ_TX_NONE,
-			.offloads = RTE_ETH_TX_OFFLOAD_TCP_CKSUM|RTE_ETH_TX_OFFLOAD_IPV4_CKSUM|RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE,
+			.offloads = RTE_ETH_TX_OFFLOAD_TCP_CKSUM|RTE_ETH_TX_OFFLOAD_IPV4_CKSUM,
 		},
-	};
+	};	
 
 	// configure the NIC
-	int retval = rte_eth_dev_configure(portid, nb_rx_queue, nb_tx_queue, &port_conf);
+	retval = rte_eth_dev_configure(portid, nb_rx_queue, nb_tx_queue, &port_conf);
 	if(retval != 0) {
 		return retval;
 	}
@@ -72,17 +79,24 @@ int init_DPDK_port(uint16_t portid, uint16_t nb_rx_queue, uint16_t nb_tx_queue, 
 		return retval;
 	}
 
+	struct rte_eth_rxconf rx_conf = dev_info.default_rxconf;
+	rx_conf.offloads = port_conf.rxmode.offloads;
+	rx_conf.rx_drop_en = 1;
+
 	// setup the RX queues
 	for(int q = 0; q < nb_rx_queue; q++) {
-		retval = rte_eth_rx_queue_setup(portid, q, nb_rxd, rte_eth_dev_socket_id(portid), NULL, mbuf_pool);
+		retval = rte_eth_rx_queue_setup(portid, q, nb_rxd, rte_eth_dev_socket_id(portid), &rx_conf, mbuf_pool);
 		if (retval < 0) {
 			return retval;
 		}
 	}
 
+	struct rte_eth_txconf tx_conf = dev_info.default_txconf;
+	tx_conf.offloads = port_conf.txmode.offloads;
+
 	// setup the TX queues
 	for(int q = 0; q < nb_tx_queue; q++) {
-		retval = rte_eth_tx_queue_setup(portid, q, nb_txd, rte_eth_dev_socket_id(portid), NULL);
+		retval = rte_eth_tx_queue_setup(portid, q, nb_txd, rte_eth_dev_socket_id(portid), &tx_conf);
 		if (retval < 0) {
 			return retval;
 		}

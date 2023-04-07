@@ -27,6 +27,7 @@ uint64_t srv_distribution;
 uint64_t srv_instructions;
 
 // General variables
+double TICKS_PER_NS;
 uint64_t TICKS_PER_US;
 uint16_t **flow_indexes_array;
 uint64_t **interarrival_array;
@@ -85,20 +86,20 @@ int process_rx_pkt(struct rte_mbuf *pkt, node_t *incoming, uint64_t *incoming_id
 		return 0;
 	}
 
-	// do not process retransmitted packets
-	uint32_t seq = rte_be_to_cpu_32(tcp_hdr->sent_seq);
-	if(SEQ_LT(block->last_seq_recv, seq)) {
-		block->last_seq_recv = seq;
-	} else {
-		return 0;
-	}
+	// // do not process retransmitted packets
+	// uint32_t seq = rte_be_to_cpu_32(tcp_hdr->sent_seq);
+	// if(SEQ_LT(block->last_seq_recv, seq)) {
+	// 	block->last_seq_recv = seq;
+	// } else {
+	// 	return 0;
+	// }
 
-	// update ACK number in the TCP control block from the packet
-	uint32_t ack_cur = rte_be_to_cpu_32(rte_atomic32_read(&block->tcb_next_ack));
-	uint32_t ack_hdr = rte_be_to_cpu_32(tcp_hdr->sent_seq) + (packet_data_size);
-	if(SEQ_LEQ(ack_cur, ack_hdr)) {
-		rte_atomic32_set(&block->tcb_next_ack, tcp_hdr->sent_seq + rte_cpu_to_be_32(packet_data_size));
-	}
+	// // update ACK number in the TCP control block from the packet
+	// uint32_t ack_cur = rte_be_to_cpu_32(rte_atomic32_read(&block->tcb_next_ack));
+	// uint32_t ack_hdr = rte_be_to_cpu_32(tcp_hdr->sent_seq) + (packet_data_size);
+	// if(SEQ_LEQ(ack_cur, ack_hdr)) {
+	// 	rte_atomic32_set(&block->tcb_next_ack, tcp_hdr->sent_seq + rte_cpu_to_be_32(packet_data_size));
+	// }
 
 	// obtain both timestamp from the packet
 	uint64_t *payload = (uint64_t *)(((uint8_t*) tcp_hdr) + ((tcp_hdr->data_off >> 4)*4));
@@ -110,8 +111,10 @@ int process_rx_pkt(struct rte_mbuf *pkt, node_t *incoming, uint64_t *incoming_id
 	node->timestamp_tx = t0;
 	node->timestamp_rx = t1;
 
-	// node->flow_id = payload[2];
-	// node->thread_id = payload[3];
+	node->flow_id = payload[2];
+	node->thread_id = payload[3];
+	node->sequence_nr = payload[6];
+	node->batch_size = payload[7];
 
 	return 1;
 }
@@ -248,6 +251,7 @@ static int lcore_rx(void *arg) {
 		for(int i = 0; i < nb_rx; i++) {
 			// fill the timestamp into packet payload
 			fill_payload_pkt(pkts[i], 1, now);
+			fill_payload_pkt(pkts[i], 7, nb_rx);
 		}
 
 		// enqueue the packets to the ring
@@ -276,14 +280,18 @@ static int lcore_tx(void *arg) {
 
 	uint64_t next_tsc = rte_rdtsc() + interarrival_gap[0];
 
+	uint64_t sequence_nr[nr_flows];
+	for(int i = 0; i < nr_flows; i++)
+		sequence_nr[i] = 0;
+
 	for(uint64_t i = 0; i < nr_elements; i++) {
-		// unable to keep up with the requested rate
-		if(unlikely(rte_rdtsc() > (next_tsc + 5*TICKS_PER_US))) {
-			// count this batch as dropped
-			nr_never_sent[qid]++;
-			next_tsc += (interarrival_gap[i] + 2*TICKS_PER_US);
-			continue;
-		}
+		// // unable to keep up with the requested rate
+		// if(unlikely(rte_rdtsc() > (next_tsc + 5000*TICKS_PER_NS))) {
+		// 	// count this batch as dropped
+		// 	nr_never_sent[qid]++;
+		// 	next_tsc += (interarrival_gap[i] + 2000*TICKS_PER_NS);
+		// 	continue;
+		// }
 
 		// choose the flow to send
 		uint16_t flow_id = flow_indexes[i];
@@ -304,6 +312,7 @@ static int lcore_tx(void *arg) {
 		fill_payload_pkt(pkts[0], 2, flow_id);
 		fill_payload_pkt(pkts[0], 4, instructions[i]);
 		fill_payload_pkt(pkts[0], 5, randomness[i]);
+		fill_payload_pkt(pkts[0], 6, sequence_nr[flow_id]++);
 
 		// sleep for while
 		while (rte_rdtsc() < next_tsc) { }
@@ -346,12 +355,18 @@ int main(int argc, char **argv) {
 
 	// create interarrival array
 	create_interarrival_array();
-	
+
+// {
+// 	for(int i = 0; i < rate * duration * 2; i++) {
+// 		printf("intergap:%lf\n", interarrival_array[0][i]/TICKS_PER_NS);
+// 	}
+// }
+
 	// initialize TCP control blocks
 	init_tcp_blocks();
 
 	// start client (3-way handshake for each flow)
-	start_client(portid);
+	// start_client(portid);
 
 	// create the DPDK rings for RX threads
 	create_dpdk_rings();

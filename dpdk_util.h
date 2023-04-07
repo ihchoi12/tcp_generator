@@ -20,7 +20,6 @@
 
 #include "tcp_util.h"
 
-#define SEED				        7
 #define BURST_SIZE    			    32
 #define RING_ELEMENTS			    512*1024
 #define MEMPOOL_CACHE_SIZE 		    512
@@ -30,6 +29,7 @@
 #define RTE_LOGTYPE_TCP_GENERATOR 	RTE_LOGTYPE_USER1
 
 extern uint32_t min_lcores;
+extern double TICKS_PER_NS;
 extern uint64_t TICKS_PER_US;
 extern struct rte_ring *rx_rings[RTE_MAX_LCORE];
 extern struct rte_mempool *pktmbuf_pool;

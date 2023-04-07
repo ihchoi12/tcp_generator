@@ -5,8 +5,7 @@ char output_file[MAXSTRLEN];
 
 // Sample the value using Exponential Distribution
 double sample(double lambda) {
-   	double u = ((double) rte_rand()) / ((uint64_t) -1);
-
+	double u = rte_drand();
 	return -log(1 - u) / lambda;
 }
 
@@ -17,10 +16,10 @@ static uint32_t process_int_arg(const char *arg) {
 	return strtoul(arg, &end, 10);
 }
 
-// Allocate all nodes for incoming packets (+ 20%)
+// Allocate all nodes for incoming packets
 void allocate_incoming_nodes() {
 	uint64_t rate_per_queue = rate/nr_queues;
-	uint64_t nr_elements_per_queue = (2 * rate_per_queue * duration) * 1.2;
+	uint64_t nr_elements_per_queue = (2 * rate_per_queue * duration);
 
 	incoming_array = (node_t**) rte_malloc(NULL, nr_queues * sizeof(node_t*), 64);
 	if(incoming_array == NULL) {
@@ -49,13 +48,13 @@ void create_interarrival_array() {
 	uint64_t rate_per_queue = rate/nr_queues;
 	double lambda;
 	if(distribution == UNIFORM_VALUE) {
-		lambda = (1.0/rate_per_queue) * 1000000.0;
+		lambda = (1.0/rate_per_queue) * 1000000000.0;
 	} else if(distribution == EXPONENTIAL_VALUE) {
-		lambda = 1.0/(1000000.0/rate_per_queue);
+		lambda = 1.0/(1000000000.0/rate_per_queue);
 	} else {
 		rte_exit(EXIT_FAILURE, "Cannot define the interarrival distribution.\n");
 	}
-	
+
 	uint64_t nr_elements_per_queue = 2 * rate_per_queue * duration;
 
 	interarrival_array = (uint64_t**) rte_malloc(NULL, nr_queues * sizeof(uint64_t*), 64);
@@ -79,11 +78,16 @@ void create_interarrival_array() {
 		uint64_t *interarrival_gap = interarrival_array[i];
 		if(distribution == UNIFORM_VALUE) {
 			for(uint64_t j = 0; j < nr_elements_per_queue; j++) {
-				interarrival_gap[j] = lambda * TICKS_PER_US;
+				interarrival_gap[j] = lambda * TICKS_PER_NS;
 			}
 		} else {
 			for(uint64_t j = 0; j < nr_elements_per_queue; j++) {
-				interarrival_gap[j] = sample(lambda) * TICKS_PER_US;
+				// double val = sample(lambda);
+				// if(val < 5000)
+				// 	val = 5000;
+				// interarrival_gap[j] = val * TICKS_PER_NS;
+
+				interarrival_gap[j] = sample(lambda) * TICKS_PER_NS;
 			}
 		}
 	} 
@@ -319,6 +323,20 @@ void print_stats_output() {
 
 	uint32_t idx_per_queue = (rate * duration)/nr_queues;
 
+	uint64_t total = 0;
+	for(uint32_t i = 0; i < nr_queues; i++) {
+		// get the pointers
+		uint32_t incoming_idx = incoming_idx_array[i];
+		uint32_t never_sent = nr_never_sent[i];
+
+		total += (incoming_idx + never_sent);
+	}
+
+	if(total != 2 * rate * duration) {
+		fclose(fp);
+		return;
+	}
+
 	for(uint32_t i = 0; i < nr_queues; i++) {
 		// get the pointers
 		node_t *incoming = incoming_array[i];
@@ -327,16 +345,25 @@ void print_stats_output() {
 
 		// get the last RATE * DURATION packets considering the 'nr_never_sent' packets
 		printf("incoming_idx = %d -- idx_per_queue = %d -- never_sent = %d\n", incoming_idx, idx_per_queue, never_sent);
-		uint64_t j = incoming_idx - idx_per_queue;
+		uint64_t j = 0;//incoming_idx - idx_per_queue;
 
 		// print the RTT latency in (ns)
 		node_t *cur;
 		for(; j < incoming_idx; j++) {
 			cur = &incoming[j];
 
-			fprintf(fp, "%lu\n", 
-				((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000)))
+			// fprintf(fp, "%lu\n", 
+			// 	((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000)))
+			// );
+
+			fprintf(fp, "%lu\t%lu\t%lu\t%lu\t%lu\n", 
+				((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000))),
+				cur->flow_id,
+				cur->thread_id,
+				cur->sequence_nr,
+				cur->batch_size
 			);
+
 		}
 	}
 
