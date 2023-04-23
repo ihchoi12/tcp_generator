@@ -24,7 +24,7 @@ sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -d $DISTRIBUTION -r $RATE 
 > **Example**
 
 ```bash
-sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -r exponential -r 50000 -f16 -s 128 -t 5 -q 1 -e 1646203793 -c addr.cfg -o output.dat -D bimodal -i 533 -j 54956 -m 0.90
+sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -d exponential -r 50000 -f 16 -s 128 -t 5 -q 1 -e 1646203793 -c addr.cfg -o output.dat -D bimodal -i 533 -j 54956 -m 0.99
 ```
 
 ### Parameters
@@ -39,9 +39,9 @@ sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -r exponential -r 50000 -f
 - `$ADDR_FILE` : name of address file (_e.g.,_ 'addr.cfg')
 - `$OUTPUT_FILE` : name of output file containg the latency for each packet
 - `$SRV_DISTRIBUTION` : instruction distribution on the server (_e.g.,_ uniform, exponential, or bimodal)
-- `$SRV_ITERATIONS0` : instructions for SRV_DISTRIBUTION
-- `$SRV_ITERATIONS1` : instructions of MODE1 for bimodal distribution
-- `$SRV_MODE` : mode for bimodal distribution (_e.g.,_ 0.0`$SRV_MODE` < 1.0)
+- `$SRV_ITERATIONS0` : instructions for `$SRV_DISTRIBUTION`
+- `$SRV_ITERATIONS1` : instructions of the _mode1_ for bimodal distribution
+- `$SRV_MODE` : mode for bimodal distribution (_e.g.,_ 0.0 < `$SRV_MODE` < 1.0)
 
 ### _addresses file_ structure
 
