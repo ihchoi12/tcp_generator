@@ -1,0 +1,8 @@
+# Build Artifacts
+build/
+
+# Executables
+percentile
+
+# Output Files
+*.dat

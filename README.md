@@ -1,6 +1,6 @@
 # TCP_generator
 
-Follow these instructions to build the tcp generator using DPDK 22.11 and CloudLab nodes
+Follow these instructions to build the TCP generator using DPDK 22.11 and CloudLab nodes
 
 ## Building
 
@@ -9,6 +9,7 @@ Follow these instructions to build the tcp generator using DPDK 22.11 and CloudL
 ```bash
 git clone https://github.com/carvalhof/tcp_generator
 cd tcp_generator
+git checkout dev
 make
 ```
 
@@ -17,13 +18,13 @@ make
 > **Make sure that `LD_LIBRARY_PATH` is configured properly.**
 
 ```bash
-sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -r $DISTRIBUTION -r $RATE -f $FLOWS -s $SIZE -t $DURATION -q $QUEUES -c $ADDR_FILE -o $OUTPUT_FILE
+sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -d $DISTRIBUTION -r $RATE -f $FLOWS -s $SIZE -t $DURATION -q $QUEUES -e $SEED -c $ADDR_FILE -o $OUTPUT_FILE -D $SRV_DISTRIBUTION -i $SRV_ITERATIONS0 -j $SRV_ITERATIONS1 -m $SRV_MODE
 ```
 
 > **Example**
 
 ```bash
-sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -r exponential -r 100000 -f 1 -s 128 -t 10 -q 1 -c addr.cfg -o output.dat
+sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -r exponential -r 50000 -f16 -s 128 -t 5 -q 1 -e 1646203793 -c addr.cfg -o output.dat -D bimodal -i 533 -j 54956 -m 0.90
 ```
 
 ### Parameters
@@ -34,9 +35,13 @@ sudo ./build/tcp-generator -a 41:00.0 -n 4 -c 0xff -- -r exponential -r 100000 -
 - `$SIZE` : packet size in _bytes_
 - `$DURATION` : duration of execution in _seconds_ (we double for warming up)
 - `$QUEUES` : number of RX/TX queues
+- `$SEED` : seed number
 - `$ADDR_FILE` : name of address file (_e.g.,_ 'addr.cfg')
 - `$OUTPUT_FILE` : name of output file containg the latency for each packet
-
+- `$SRV_DISTRIBUTION` : instruction distribution on the server (_e.g.,_ uniform, exponential, or bimodal)
+- `$SRV_ITERATIONS0` : instructions for SRV_DISTRIBUTION
+- `$SRV_ITERATIONS1` : instructions of MODE1 for bimodal distribution
+- `$SRV_MODE` : mode for bimodal distribution (_e.g.,_ 0.0`$SRV_MODE` < 1.0)
 
 ### _addresses file_ structure
 
@@ -51,7 +56,4 @@ dst = 192.168.1.1
 
 [tcp]
 dst = 12345
-
-[server]
-nr_servers = 1
 ```

@@ -38,9 +38,11 @@ CFLAGS += -DALLOW_EXPERIMENTAL_API -Wall
 
 build/$(APP)-shared: $(SRCS-y) Makefile $(PC_FILE) | build
 	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@ $(LDFLAGS) $(LDFLAGS_SHARED) -lm
+	gcc percentile.c -o percentile -O2 -Wall
 
 build/$(APP)-static: $(SRCS-y) Makefile $(PC_FILE) | build
 	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@ $(LDFLAGS) $(LDFLAGS_SHARED) -lm
+	gcc percentile.c -o percentile -O2 -Wall
 
 build:
 	@mkdir -p $@
