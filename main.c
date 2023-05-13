@@ -115,8 +115,9 @@ void start_client(uint16_t portid) {
 	struct rte_mbuf *pkt;
 	tcp_control_block_t *block;
 	struct rte_mbuf *pkts[BURST_SIZE];
-
+	fprintf(stderr, "11\n");
 	for(int i = 0; i < nr_flows; i++) {
+		fprintf(stderr, "%d\n", i);
 		// get the TCP control block for the flow
 		block = &tcp_control_blocks[i];
 		// create the TCP SYN packet
@@ -136,7 +137,7 @@ void start_client(uint16_t portid) {
 
 		// change the TCP state to SYN_SENT
 		rte_atomic16_set(&block->tcb_state, TCP_SYN_SENT);
-
+		fprintf(stderr, "hi\n");
 		// while not received SYN+ACK packet and TCP state is not ESTABLISHED
 		while(rte_atomic16_read(&block->tcb_state) != TCP_ESTABLISHED) {
 			// receive TCP SYN+ACK packets from the NIC
@@ -156,9 +157,10 @@ void start_client(uint16_t portid) {
 			}
 			// free packets
 			rte_pktmbuf_free_bulk(pkts, nb_rx);
-
+			
 			if((rte_rdtsc() - ts_syn) > HANDSHAKE_TIMEOUT_IN_US * TICKS_PER_US) {
 				nb_retransmission++;
+				fprintf(stderr, "send\n");
 				nb_tx = rte_eth_tx_burst(portid, i % nr_queues, &syn_packet, 1);
 				if(nb_tx != 1) {
 						rte_exit(EXIT_FAILURE, "Error to send the TCP SYN packet.\n");
@@ -170,12 +172,13 @@ void start_client(uint16_t portid) {
 				}
 			}
 		}
+		fprintf(stderr, "hi3\n");
 	}
-
+	fprintf(stderr, "done\n");
 	// Discard 3-way handshake packets in the DPDK metrics
 	rte_eth_stats_reset(portid);
 	rte_eth_xstats_reset(portid);
-	
+	fprintf(stderr, "done2\n");
 	rte_compiler_barrier();
 }
 
@@ -346,13 +349,13 @@ int main(int argc, char **argv) {
 	
 	// initialize TCP control blocks
 	init_tcp_blocks();
-
+	fprintf(stderr, "1");
 	// start client (3-way handshake for each flow)
 	start_client(portid);
-
+	fprintf(stderr, "2");
 	// create the DPDK rings for RX threads
 	create_dpdk_rings();
-
+	fprintf(stderr, "3");
 	// start RX and TX threads
 	uint32_t id_lcore = rte_lcore_id();	
 	for(int i = 0; i < nr_queues; i++) {
@@ -369,10 +372,10 @@ int main(int argc, char **argv) {
 		id_lcore = rte_get_next_lcore(id_lcore, 1, 1);
 		rte_eal_remote_launch(lcore_tx, (void*) &lcore_params[i], id_lcore);
 	}
-
+	fprintf(stderr, "4");
 	// wait for duration parameter
 	wait_timeout();
-
+	fprintf(stderr, "5");
 	// wait for RX/TX threads
 	uint32_t lcore_id;
 	RTE_LCORE_FOREACH_WORKER(lcore_id) {
@@ -383,10 +386,10 @@ int main(int argc, char **argv) {
 
 	// print stats
 	print_stats_output();
-
+	fprintf(stderr, "6");
 	// print DPDK stats
 	print_dpdk_stats(portid);
-
+	fprintf(stderr, "7");
 	// clean up
 	clean_heap();
 	clean_hugepages();

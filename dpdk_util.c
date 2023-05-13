@@ -20,7 +20,12 @@ void init_DPDK(uint16_t portid, uint64_t nr_queues) {
 	// allocate the packet pool
 	char s[64];
 	snprintf(s, sizeof(s), "mbuf_pool");
-	pktmbuf_pool = rte_pktmbuf_pool_create(s, PKTMBUF_POOL_ELEMENTS, MEMPOOL_CACHE_SIZE, 0,	RTE_MBUF_DEFAULT_BUF_SIZE, rte_socket_id());
+	pktmbuf_pool = rte_pktmbuf_pool_create(s, 
+								PKTMBUF_POOL_ELEMENTS * nr_queues - 1, 
+								MEMPOOL_CACHE_SIZE, 
+								0,	
+								RTE_MBUF_DEFAULT_BUF_SIZE, 
+								rte_socket_id());
 
 	if(pktmbuf_pool == NULL) {
 		rte_exit(EXIT_FAILURE, "Cannot init mbuf pool on socket %d\n", rte_socket_id());

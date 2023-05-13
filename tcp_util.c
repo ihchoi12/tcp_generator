@@ -23,7 +23,8 @@ void init_tcp_blocks() {
 	uint16_t src_tcp_port;
 	uint16_t ports[nr_flows];
 	for(uint32_t i = 0; i < nr_flows; i++) {
-		ports[i] = rte_cpu_to_be_16((i % (nr_flows/nr_servers)) + 1);
+		ports[i] = rte_cpu_to_be_16(10000 + i);
+		fprintf(stderr, "flow %d: src_port %u (be: %u)\n", i, 10000 + i, ports[i]);
 	}
 	// shuffle port array
 	shuffle(ports, nr_flows);
@@ -39,8 +40,8 @@ void init_tcp_blocks() {
 		tcp_control_blocks[i].dst_addr = dst_ipv4_addr;
 
 		tcp_control_blocks[i].src_port = src_tcp_port;
-		tcp_control_blocks[i].dst_port = rte_cpu_to_be_16(dst_tcp_port + (i % nr_servers));
-
+		tcp_control_blocks[i].dst_port = rte_cpu_to_be_16(10000);
+		fprintf(stderr, "src_port: %u, dst_port: %u\n", 10000 + i, 10000);
 		uint32_t seq = rte_rand();
 		tcp_control_blocks[i].tcb_seq_ini = seq;
 		tcp_control_blocks[i].tcb_next_seq = seq;
