@@ -214,7 +214,7 @@ struct rte_mbuf* process_syn_ack_packet(struct rte_mbuf* pkt) {
 }
 
 // Fill the TCP packets from TCP Control Block data
-void fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt) {
+uint32_t fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt) {
 	// get control block for the flow
 	tcp_control_block_t *block = &tcp_control_blocks[i];
 
@@ -254,6 +254,8 @@ void fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt) {
 	tcp_hdr->tcp_urp = 0;
 	tcp_hdr->cksum = 0;
 
+	// fprintf(stderr, "flowId: %u, sendseq: %u\n", i, sent_seq);
+
 	// updates the TCP SEQ number
 	sent_seq = rte_cpu_to_be_32(rte_be_to_cpu_32(sent_seq) + tcp_payload_size);
 	block->tcb_next_seq = sent_seq;
@@ -265,11 +267,27 @@ void fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt) {
 	// fill the packet size
 	pkt->data_len = frame_size;
 	pkt->pkt_len = pkt->data_len;
+	return sent_seq;
 }
 
 // Fill the payload of the TCP packet
 void fill_tcp_payload(uint8_t *payload, uint32_t length) {
-	for(uint32_t i = 0; i < length; i++) {
+	// // Construct the HTTP GET request
+	// const char* http_request = "GET /index.html HTTP/1.1\r\n"
+	// 						"Host: example.com\r\n"
+	// 						"Connection: close\r\n"
+	// 						"\r\n";
+	// Determine the size of the HTTP request
+	size_t http_request_size = strlen(http_request);
+
+	// Check if the payload buffer is large enough to hold the HTTP request
+	if (tcp_payload_size < http_request_size) {
+		fprintf(stderr, "TCP payload buffer is too small for the HTTP request\n");
+		exit(1);  // or handle the error appropriately
+	}
+	// Copy the HTTP request into the payload buffer
+	memcpy(payload, http_request, http_request_size);
+	for(uint32_t i = http_request_size; i < length; i++) {
 		payload[i] = 'A';
 	}
 }

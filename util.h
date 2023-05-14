@@ -20,6 +20,7 @@
 #include <rte_malloc.h>
 #include <rte_cfgfile.h>
 #include <rte_mempool.h>
+#include "tcp_util.h"
 
 // Constants
 #define EPSILON						0.00001
@@ -44,6 +45,13 @@ typedef struct timestamp_node_t {
 	uint64_t timestamp_tx;
 	uint64_t nr_never_sent;
 } node_t;
+
+typedef struct profiler_t {
+	uint64_t flow_id;
+	uint32_t sent_seq;
+	uint64_t timestamp_rx;
+	uint64_t timestamp_tx;
+} profiler_entry_t;
 
 extern uint64_t rate;
 extern uint16_t portid;
@@ -72,6 +80,10 @@ extern volatile uint8_t quit_rx_ring;
 extern node_t **incoming_array;
 extern uint64_t *incoming_idx_array;
 
+extern profiler_entry_t **profiler_array;
+extern uint64_t *profiler_tx_idx_array;
+extern uint64_t *profiler_rx_idx_array;
+
 void clean_heap();
 void wait_timeout();
 void print_dpdk_stats();
@@ -79,6 +91,7 @@ void print_stats_output();
 void process_config_file();
 double sample(double lambda);
 void allocate_incoming_nodes();
+void allocate_flow_profiler();
 void create_interarrival_array();
 void create_flow_indexes_array();
 int app_parse_args(int argc, char **argv);

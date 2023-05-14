@@ -16,6 +16,10 @@
 #include <rte_malloc.h>
 #include <rte_mempool.h>
 
+
+// Construct the HTTP GET request
+static char* http_request = "GET /index.html HTTP/1.1\r\nHost: 10.0.1.8:10000\r\nUser-Agent: curl/7.68.0\r\nAccept: */*\r\n\r\n";
+
 // TCP State enum
 typedef enum {
 	TCP_INIT,
@@ -87,7 +91,7 @@ extern tcp_control_block_t *tcp_control_blocks;
 void init_tcp_blocks();
 struct rte_mbuf* create_syn_packet(uint16_t i);
 struct rte_mbuf *create_ack_packet(uint16_t i);
-void fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt);
+uint32_t fill_tcp_packet(uint16_t i, struct rte_mbuf *pkt);
 void fill_tcp_payload(uint8_t *payload, uint32_t length);
 struct rte_mbuf* process_syn_ack_packet(struct rte_mbuf* pkt);
 

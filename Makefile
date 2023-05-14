@@ -6,6 +6,7 @@ APP = tcp-generator
 
 # all source are stored in SRCS-y
 SRCS-y := main.c util.c tcp_util.c dpdk_util.c
+DEPS := util.h
 
 # Build using pkg-config variables if possible
 ifneq ($(shell pkg-config --exists libdpdk && echo 0),0)
@@ -36,10 +37,10 @@ endif
 
 CFLAGS += -DALLOW_EXPERIMENTAL_API -Wall
 
-build/$(APP)-shared: $(SRCS-y) Makefile $(PC_FILE) | build
+build/$(APP)-shared: $(SRCS-y) $(DEPS) Makefile $(PC_FILE) | build
 	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@ $(LDFLAGS) $(LDFLAGS_SHARED) -lm
 
-build/$(APP)-static: $(SRCS-y) Makefile $(PC_FILE) | build
+build/$(APP)-static: $(SRCS-y) $(DEPS) Makefile $(PC_FILE) | build
 	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@ $(LDFLAGS) $(LDFLAGS_SHARED) -lm
 
 build:

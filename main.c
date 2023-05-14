@@ -30,6 +30,9 @@ uint64_t **interarrival_array;
 // Heap and DPDK allocated
 node_t **incoming_array;
 uint64_t *incoming_idx_array;
+profiler_entry_t **profiler_array;
+uint64_t *profiler_tx_idx_array;
+uint64_t *profiler_rx_idx_array;
 struct rte_mempool *pktmbuf_pool;
 tcp_control_block_t *tcp_control_blocks;
 
@@ -85,25 +88,40 @@ int process_rx_pkt(struct rte_mbuf *pkt, node_t *incoming, uint64_t *incoming_id
 	} else {
 		return 0;
 	}
-
+	// fprintf(stderr, "flowId: %u, recvack: %u\n", flow_id, tcp_hdr->recv_ack);
 	// update ACK number in the TCP control block from the packet
 	uint32_t ack_cur = rte_be_to_cpu_32(rte_atomic32_read(&block->tcb_next_ack));
 	uint32_t ack_hdr = rte_be_to_cpu_32(tcp_hdr->sent_seq) + (packet_data_size);
 	if(SEQ_LEQ(ack_cur, ack_hdr)) {
 		rte_atomic32_set(&block->tcb_next_ack, tcp_hdr->sent_seq + rte_cpu_to_be_32(packet_data_size));
 	}
-
+	
 	// obtain both timestamp from the packet
-	uint64_t *payload = (uint64_t *)(((uint8_t*) tcp_hdr) + ((tcp_hdr->data_off >> 4)*4));
-	uint64_t t0 = payload[0];
-	uint64_t t1 = payload[1];
-
+	// size_t http_request_size = strlen(http_request);
+	// uint64_t *payload = (uint64_t *)(((uint8_t*) tcp_hdr) + ((tcp_hdr->data_off >> 4)*4));
+	// uint64_t t0 = payload[0];
+	// uint64_t t1 = payload[1];
+	// fprintf(stderr, "rx: %lu, tx: %lu, gap: %lu\n", t1, t0, ((uint64_t)((t1-t0)/((double)TICKS_PER_US/1000))));
 	// fill the node previously allocated
-	node_t *node = &incoming[(*incoming_idx)++];
-	node->timestamp_tx = t0;
-	node->timestamp_rx = t1;
+	// node_t *node = &incoming[(*incoming_idx)++];
+	// node->timestamp_tx = t0;
+	// node->timestamp_rx = t1;
+	uint64_t *profiler_rx_idx = &profiler_rx_idx_array[flow_id];
+	uint64_t *profiler_tx_idx = &profiler_tx_idx_array[flow_id];
+	profiler_entry_t *profiler = profiler_array[flow_id];
 
-	return 1;
+
+	for(uint64_t i = *profiler_rx_idx; i < *profiler_tx_idx; i++) {
+		profiler_entry_t *profiler_entry = &profiler[i];
+		if(profiler_entry->sent_seq == tcp_hdr->recv_ack){
+			profiler_entry->timestamp_rx = rte_rdtsc();
+			(*profiler_rx_idx) = i+1;
+			// fprintf(stderr, "[RX %lu] seq: %u, time: %lu\n", i, profiler_entry->sent_seq, 
+			// 				((uint64_t)((profiler_entry->timestamp_rx - profiler_entry->timestamp_tx)/((double)TICKS_PER_US/1000))));
+			return 1;
+		}
+	}
+	rte_exit(EXIT_FAILURE, "Cannot find matching profiler entry.\n");
 }
 
 // Start the client establishing all TCP connections
@@ -115,9 +133,7 @@ void start_client(uint16_t portid) {
 	struct rte_mbuf *pkt;
 	tcp_control_block_t *block;
 	struct rte_mbuf *pkts[BURST_SIZE];
-	fprintf(stderr, "11\n");
 	for(int i = 0; i < nr_flows; i++) {
-		fprintf(stderr, "%d\n", i);
 		// get the TCP control block for the flow
 		block = &tcp_control_blocks[i];
 		// create the TCP SYN packet
@@ -137,7 +153,6 @@ void start_client(uint16_t portid) {
 
 		// change the TCP state to SYN_SENT
 		rte_atomic16_set(&block->tcb_state, TCP_SYN_SENT);
-		fprintf(stderr, "hi\n");
 		// while not received SYN+ACK packet and TCP state is not ESTABLISHED
 		while(rte_atomic16_read(&block->tcb_state) != TCP_ESTABLISHED) {
 			// receive TCP SYN+ACK packets from the NIC
@@ -160,7 +175,6 @@ void start_client(uint16_t portid) {
 			
 			if((rte_rdtsc() - ts_syn) > HANDSHAKE_TIMEOUT_IN_US * TICKS_PER_US) {
 				nb_retransmission++;
-				fprintf(stderr, "send\n");
 				nb_tx = rte_eth_tx_burst(portid, i % nr_queues, &syn_packet, 1);
 				if(nb_tx != 1) {
 						rte_exit(EXIT_FAILURE, "Error to send the TCP SYN packet.\n");
@@ -172,13 +186,10 @@ void start_client(uint16_t portid) {
 				}
 			}
 		}
-		fprintf(stderr, "hi3\n");
 	}
-	fprintf(stderr, "done\n");
 	// Discard 3-way handshake packets in the DPDK metrics
 	rte_eth_stats_reset(portid);
 	rte_eth_xstats_reset(portid);
-	fprintf(stderr, "done2\n");
 	rte_compiler_barrier();
 }
 
@@ -236,11 +247,14 @@ static int lcore_rx(void *arg) {
 		nb_rx = rte_eth_rx_burst(portid, qid, pkts, BURST_SIZE);
 
 		// retrive the current timestamp
-		now = rte_rdtsc();
-		for(int i = 0; i < nb_rx; i++) {
-			// fill the timestamp into packet payload
-			fill_payload_pkt(pkts[i], 1, now);
-		}
+		// now = rte_rdtsc();
+		// for(int i = 0; i < nb_rx; i++) {
+		// 	// fill the timestamp into packet payload
+		// 	fill_payload_pkt(pkts[i], 1, now);
+		// }
+		// for(int i = 0; i < nb_rx; i++) {
+		// 	fprintf(stderr,"rx time: %lu\n", rte_rdtsc() );
+		// }
 		if(rte_ring_sp_enqueue_burst(rx_ring, (void* const*) pkts, nb_rx, NULL) != nb_rx) {
 			rte_exit(EXIT_FAILURE, "Cannot enqueue the packet to the RX thread: %s.\n", rte_strerror(errno));
 		}
@@ -264,6 +278,7 @@ static int lcore_tx(void *arg) {
 	uint16_t *flow_indexes = flow_indexes_array[qid];
 	uint64_t *interarrival_gap = interarrival_array[qid];
 	uint64_t next_tsc = rte_rdtsc() + interarrival_gap[i];
+	uint32_t seq_num;
 
 	while(!quit_tx) { 
 		// reach the limit
@@ -279,7 +294,7 @@ static int lcore_tx(void *arg) {
 		for(; nb_pkts < n; nb_pkts++) {
 			pkts[nb_pkts] = rte_pktmbuf_alloc(pktmbuf_pool);
 			// fill the packet with the flow information
-			fill_tcp_packet(flow_id, pkts[nb_pkts]);
+			seq_num = fill_tcp_packet(flow_id, pkts[nb_pkts]);
 		}
 
 		// check receive window for that flow
@@ -297,10 +312,18 @@ static int lcore_tx(void *arg) {
 		}
 
 		// fill the timestamp into the packet payload
+		// for(int j = 0; j < nb_pkts; j++) {
+		// 	fill_payload_pkt(pkts[j], 0, next_tsc);
+		// }
+		uint64_t *profiler_tx_idx = &profiler_tx_idx_array[flow_id];
+		profiler_entry_t *profiler = profiler_array[flow_id];
 		for(int j = 0; j < nb_pkts; j++) {
-			fill_payload_pkt(pkts[j], 0, next_tsc);
+			profiler_entry_t *profiler_entry = &profiler[(*profiler_tx_idx)++];
+			profiler_entry->timestamp_tx = next_tsc;
+			profiler_entry->timestamp_rx = 0; // default value is 0 
+			profiler_entry->sent_seq = seq_num;
+			// fprintf(stderr, "[TX %lu] seq: %u, time: %lu\n", *profiler_tx_idx-1, profiler_entry->sent_seq, profiler_entry->timestamp_tx);
 		}
-
 		// sleep for while
 		while (rte_rdtsc() < next_tsc) {  }
 
@@ -340,6 +363,7 @@ int main(int argc, char **argv) {
 
 	// allocate nodes for incoming packets
 	allocate_incoming_nodes();
+	allocate_flow_profiler();	
 
 	// create flow indexes array
 	create_flow_indexes_array();
@@ -349,13 +373,10 @@ int main(int argc, char **argv) {
 	
 	// initialize TCP control blocks
 	init_tcp_blocks();
-	fprintf(stderr, "1");
 	// start client (3-way handshake for each flow)
 	start_client(portid);
-	fprintf(stderr, "2");
 	// create the DPDK rings for RX threads
 	create_dpdk_rings();
-	fprintf(stderr, "3");
 	// start RX and TX threads
 	uint32_t id_lcore = rte_lcore_id();	
 	for(int i = 0; i < nr_queues; i++) {
@@ -372,10 +393,8 @@ int main(int argc, char **argv) {
 		id_lcore = rte_get_next_lcore(id_lcore, 1, 1);
 		rte_eal_remote_launch(lcore_tx, (void*) &lcore_params[i], id_lcore);
 	}
-	fprintf(stderr, "4");
 	// wait for duration parameter
 	wait_timeout();
-	fprintf(stderr, "5");
 	// wait for RX/TX threads
 	uint32_t lcore_id;
 	RTE_LCORE_FOREACH_WORKER(lcore_id) {
@@ -386,10 +405,8 @@ int main(int argc, char **argv) {
 
 	// print stats
 	print_stats_output();
-	fprintf(stderr, "6");
 	// print DPDK stats
 	print_dpdk_stats(portid);
-	fprintf(stderr, "7");
 	// clean up
 	clean_heap();
 	clean_hugepages();

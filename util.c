@@ -42,7 +42,39 @@ void allocate_incoming_nodes() {
 	for(uint64_t i = 0; i < nr_queues; i++) {
 		incoming_idx_array[i] = 0;
 	}
-} 
+}
+
+// Allocate profilers for each flow (+ 20%)
+void allocate_flow_profiler() {
+	uint64_t rate_per_flow = rate/nr_flows;
+	uint64_t nr_pkts_per_flow = (2 * rate_per_flow * duration) * 1.2;
+
+	profiler_array = (profiler_entry_t**) malloc(nr_flows * sizeof(profiler_entry_t*));
+	if(profiler_array == NULL) {
+		rte_exit(EXIT_FAILURE, "Cannot alloc the profiler array.\n");
+	}
+
+	for(uint64_t i = 0; i < nr_flows; i++) {
+		profiler_array[i] = (profiler_entry_t*) malloc(nr_pkts_per_flow * sizeof(profiler_entry_t));
+		if(profiler_array[i] == NULL) {
+			rte_exit(EXIT_FAILURE, "Cannot alloc the profiler.\n");
+		}
+	}
+
+	profiler_tx_idx_array = (uint64_t*) malloc(nr_flows * sizeof(uint64_t));
+	if(profiler_tx_idx_array == NULL) {
+		rte_exit(EXIT_FAILURE, "Cannot alloc the profiler_tx_idx array.\n");
+	}
+	profiler_rx_idx_array = (uint64_t*) malloc(nr_flows * sizeof(uint64_t));
+	if(profiler_rx_idx_array == NULL) {
+		rte_exit(EXIT_FAILURE, "Cannot alloc the profiler_rx_idx array.\n");
+	}
+
+	for(uint64_t i = 0; i < nr_flows; i++) {
+		profiler_tx_idx_array[i] = 0;
+		profiler_rx_idx_array[i] = 0;
+	}
+}
 
 // Allocate and create an array for all interarrival packets for rate specified.
 void create_interarrival_array() {
@@ -118,6 +150,8 @@ void create_flow_indexes_array() {
 void clean_heap() {
 	free(incoming_array);
 	free(incoming_idx_array);
+	// free(profiler_array);
+	// free(profiler_idx_array);
 	free(flow_indexes_array);
 	free(interarrival_array);
 }
@@ -251,19 +285,38 @@ void print_stats_output() {
 		rte_exit(EXIT_FAILURE, "Cannot open the output file.\n");
 	}
 
-	for(uint32_t i = 0; i < nr_queues; i++) {
+	// for(uint32_t i = 0; i < nr_queues; i++) {
+	// 	// get the pointers
+	// 	node_t *incoming = incoming_array[i];
+	// 	uint32_t incoming_idx = incoming_idx_array[i];
+
+	// 	// drop the first 50% packets for warming up
+	// 	uint64_t j = 0.5 * incoming_idx;
+
+	// 	// print the RTT latency in (ns)
+	// 	node_t *cur;
+	// 	for(; j < incoming_idx; j++) {
+	// 		cur = &incoming[j];
+
+	// 		fprintf(fp, "%lu\n", ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000))));
+	// 	}
+	// }
+
+	for(uint32_t i = 0; i < nr_flows; i++) {
 		// get the pointers
-		node_t *incoming = incoming_array[i];
-		uint32_t incoming_idx = incoming_idx_array[i];
+		profiler_entry_t *profiler = profiler_array[i];
+		uint64_t profiler_idx = profiler_rx_idx_array[i];
 
 		// drop the first 50% packets for warming up
-		uint64_t j = 0.5 * incoming_idx;
+		uint64_t j = 0.5 * profiler_idx;
 
 		// print the RTT latency in (ns)
-		node_t *cur;
-		for(; j < incoming_idx; j++) {
-			cur = &incoming[j];
-
+		profiler_entry_t *cur;
+		for(; j < profiler_idx; j++) {
+			cur = &profiler[j];
+			if(cur->timestamp_rx == 0){
+				continue;
+			}
 			fprintf(fp, "%lu\n", ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000))));
 		}
 	}
@@ -326,7 +379,13 @@ void process_config_file(char *cfg_file) {
 
 // Fill the data into packet payload properly
 inline void fill_payload_pkt(struct rte_mbuf *pkt, uint32_t idx, uint64_t value) {
-	uint8_t *payload = (uint8_t*) rte_pktmbuf_mtod_offset(pkt, uint8_t*, sizeof(struct rte_ether_hdr) + sizeof(struct rte_ipv4_hdr) + sizeof(struct rte_tcp_hdr));
+	// size_t http_request_size = strlen(http_request);
+	// fprintf(stderr, "http_request_size: %lu", http_request_size);
+	uint8_t *payload = (uint8_t*) rte_pktmbuf_mtod_offset(pkt, 
+														uint8_t*, sizeof(struct rte_ether_hdr) 
+														+ sizeof(struct rte_ipv4_hdr) 
+														+ sizeof(struct rte_tcp_hdr));
+														// + http_request_size);
 
 	((uint64_t*) payload)[idx] = value;
 }
