@@ -245,6 +245,7 @@ int cmp_func(const void * a, const void * b) {
 
 // Print stats into output file
 void print_stats_output() {
+	fprintf(stderr,"Print STAT");
 	// open the file
 	FILE *fp = fopen(output_file, "w");
 	if(fp == NULL) {
