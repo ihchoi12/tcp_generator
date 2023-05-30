@@ -42,7 +42,7 @@ void init_tcp_blocks() {
 		tcp_control_blocks[i].src_port = src_tcp_port;
 		tcp_control_blocks[i].dst_port = rte_cpu_to_be_16(10000);
 		fprintf(stderr, "src_port: %u, dst_port: %u\n", 10000 + i, 10000);
-		uint32_t seq = rte_rand();
+		uint32_t seq = 1;
 		tcp_control_blocks[i].tcb_seq_ini = seq;
 		tcp_control_blocks[i].tcb_next_seq = seq;
 

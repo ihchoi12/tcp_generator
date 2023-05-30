@@ -78,6 +78,7 @@ int process_rx_pkt(struct rte_mbuf *pkt, node_t *incoming, uint64_t *incoming_id
 
 	// do not process empty packets
 	if(unlikely(packet_data_size == 0)) {
+		// fprintf(stderr, "[RX] EMPTY\n", tcp_hdr->recv_ack);
 		return 0;
 	}
 
@@ -111,17 +112,19 @@ int process_rx_pkt(struct rte_mbuf *pkt, node_t *incoming, uint64_t *incoming_id
 	profiler_entry_t *profiler = profiler_array[flow_id];
 
 
-	for(uint64_t i = *profiler_rx_idx; i < *profiler_tx_idx; i++) {
-		profiler_entry_t *profiler_entry = &profiler[i];
-		if(profiler_entry->sent_seq == tcp_hdr->recv_ack){
-			profiler_entry->timestamp_rx = rte_rdtsc();
-			(*profiler_rx_idx) = i+1;
+	// fprintf(stderr, "[RX] %u\n", rte_be_to_cpu_32(tcp_hdr->recv_ack));
+	// for(uint64_t i = *profiler_rx_idx; i < *profiler_tx_idx; i++) {
+	profiler_entry_t *profiler_entry = &profiler[(*profiler_rx_idx)++];
+		// if(profiler_entry->sent_seq == tcp_hdr->recv_ack){
+	profiler_entry->timestamp_rx = rte_rdtsc();
+			// (*profiler_rx_idx) = i+1;
 			// fprintf(stderr, "[RX %lu] seq: %u, time: %lu\n", i, profiler_entry->sent_seq, 
 			// 				((uint64_t)((profiler_entry->timestamp_rx - profiler_entry->timestamp_tx)/((double)TICKS_PER_US/1000))));
-			return 1;
-		}
-	}
-	rte_exit(EXIT_FAILURE, "Cannot find matching profiler entry.\n");
+			// return 1;
+		// }
+	// }
+	// rte_exit(EXIT_FAILURE, "Cannot find matching profiler entry.\n");
+	return 1;
 }
 
 // Start the client establishing all TCP connections
@@ -280,7 +283,8 @@ static int lcore_tx(void *arg) {
 	uint64_t next_tsc = rte_rdtsc() + interarrival_gap[i];
 	uint32_t seq_num;
 
-	while(!quit_tx) { 
+	while(!quit_tx) {
+	// for(int k=0; k<10; k++) {
 		// reach the limit
 		if(unlikely(i >= nr_elements)) {
 			break;
@@ -322,8 +326,8 @@ static int lcore_tx(void *arg) {
 			profiler_entry->timestamp_tx = next_tsc;
 			profiler_entry->timestamp_rx = 0; // default value is 0 
 			profiler_entry->sent_seq = seq_num;
-			// fprintf(stderr, "[TX %lu] seq: %u, time: %lu\n", *profiler_tx_idx-1, profiler_entry->sent_seq, profiler_entry->timestamp_tx);
 		}
+		
 		// sleep for while
 		while (rte_rdtsc() < next_tsc) {  }
 
@@ -332,7 +336,7 @@ static int lcore_tx(void *arg) {
 		if(unlikely(nb_tx != nb_pkts)) {
 			rte_exit(EXIT_FAILURE, "Cannot send the target packets.\n");
 		}
-
+		// fprintf(stderr, "[TX] %u\n", rte_be_to_cpu_32(seq_num));
 		// update the counter
 		nb_pkts = 0;
 		next_tsc += interarrival_gap[i++];
@@ -375,6 +379,9 @@ int main(int argc, char **argv) {
 	init_tcp_blocks();
 	// start client (3-way handshake for each flow)
 	start_client(portid);
+	// sleep for while
+	uint64_t now = rte_rdtsc();
+	while (rte_rdtsc() < now + 5000000000) {  }
 	// create the DPDK rings for RX threads
 	create_dpdk_rings();
 	// start RX and TX threads
@@ -402,7 +409,7 @@ int main(int argc, char **argv) {
 			return -1;
 		}
 	}
-
+	// fprintf(stderr,"hi\n");
 	// print stats
 	print_stats_output();
 	// print DPDK stats

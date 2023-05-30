@@ -279,6 +279,7 @@ int cmp_func(const void * a, const void * b) {
 
 // Print stats into output file
 void print_stats_output() {
+	fprintf(stderr, "PRINTING STATS\n");
 	// open the file
 	FILE *fp = fopen(output_file, "w");
 	if(fp == NULL) {
@@ -301,9 +302,11 @@ void print_stats_output() {
 	// 		fprintf(fp, "%lu\n", ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000))));
 	// 	}
 	// }
+	uint64_t latencies[1000001] = {0}, total_count=0;
 
 	for(uint32_t i = 0; i < nr_flows; i++) {
 		// get the pointers
+		fprintf(stderr, "[TX] %lu, [RX] %lu\n", profiler_tx_idx_array[i], profiler_rx_idx_array[i]);
 		profiler_entry_t *profiler = profiler_array[i];
 		uint64_t profiler_idx = profiler_rx_idx_array[i];
 
@@ -317,10 +320,35 @@ void print_stats_output() {
 			if(cur->timestamp_rx == 0){
 				continue;
 			}
-			fprintf(fp, "%lu\n", ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000))));
+			uint64_t lat_us = ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000)))/1000;
+			// printf("lat_us: %lu\n", lat_us);
+			if(lat_us > 1000000){
+
+				fprintf(stderr, "WARNING: Latency bigger than 1s, something might be wrong...\n");
+				fprintf(stderr, "%lu - %lu = %lu\n", cur->timestamp_rx, cur->timestamp_tx, cur->timestamp_rx - cur->timestamp_tx);
+				continue;
+			}
+			fprintf(fp, "%lu\n", lat_us);
+			latencies[lat_us] += 1;
+			total_count += 1;
 		}
 	}
-
+	uint64_t count = 0, median = 0, p99 = 0;
+	for(uint32_t i = 0; i < 1000001; i++) {
+		if(latencies[i] == 0){
+			continue;
+		}
+		
+		count += latencies[i];
+		// fprintf(stderr, "%u %lu %lu %lu\n", i, count, total_count, total_count * 99 / 100);
+		if(median == 0 && count >= total_count/2){
+			median = i;
+		}
+		if(p99 == 0 && count >= (total_count * 99 / 100)){
+			p99 = i;
+		}
+	}
+	fprintf(stderr, "Throughput: %lu, Median: %lu, p99: %lu\n", total_count/duration, median, p99);
 	// close the file
 	fclose(fp);
 }
