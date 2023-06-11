@@ -117,6 +117,7 @@ void print_dpdk_stats(uint32_t portid) {
 	
 	printf("\n\nDPDK RX Stats:\n");
 	printf("ipackets: %lu\n", eth_stats.ipackets);
+	printf("empty pkts: %lu\n", num_acks);
 	printf("ibytes: %lu\n", eth_stats.ibytes);
 	printf("ierror: %lu\n", eth_stats.ierrors);
 	printf("imissed: %lu\n", eth_stats.imissed);
@@ -124,6 +125,7 @@ void print_dpdk_stats(uint32_t portid) {
 
 	printf("\nDPDK TX Stats:\n");
 	printf("opackets: %lu\n", eth_stats.opackets);
+	printf("skipped_tx: %lu\n", skipped_tx);
 	printf("obytes: %lu\n", eth_stats.obytes);
 	printf("oerror: %lu\n", eth_stats.oerrors);
 

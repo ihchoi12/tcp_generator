@@ -251,7 +251,7 @@ void print_stats_output() {
 	if(fp == NULL) {
 		rte_exit(EXIT_FAILURE, "Cannot open the output file.\n");
 	}
-
+	uint64_t latencies[1000001] = {0}, total_count=0;
 	for(uint32_t i = 0; i < nr_queues; i++) {
 		// get the pointers
 		node_t *incoming = incoming_array[i];
@@ -264,11 +264,39 @@ void print_stats_output() {
 		node_t *cur;
 		for(; j < incoming_idx; j++) {
 			cur = &incoming[j];
-
-			fprintf(fp, "%lu\n", ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000))));
+			uint64_t lat_us = ((uint64_t)((cur->timestamp_rx - cur->timestamp_tx)/((double)TICKS_PER_US/1000)/1000));
+			fprintf(fp, "%lu\n", lat_us);
+			latencies[lat_us] += 1;
+			total_count += 1;
 		}
 	}
-
+	uint64_t count = 0, median = 0, p90=0, p95=0, p99=0, p99dot9=0;
+	for(uint32_t i = 0; i < 1000001; i++) {
+		if(latencies[i] == 0){
+			continue;
+		}
+		
+		count += latencies[i];
+		// fprintf(stderr, "%u %lu %lu %lu\n", i, count, total_count, total_count * 99 / 100);
+		if(median == 0 && count >= total_count/2){
+			median = i;
+		}
+		if(p90 == 0 && count >= (total_count * 90 / 100)){
+			p90 = i;
+		}
+		if(p95 == 0 && count >= (total_count * 95 / 100)){
+			p95 = i;
+		}
+		if(p99 == 0 && count >= (total_count * 99 / 100)){
+			p99 = i;
+		}
+		if(p99dot9 == 0 && count >= (total_count * 999 / 1000)){
+			p99dot9 = i;
+		}
+	}
+	printf("Rate,Throughput,Median,p90,p95,p99,p99.9\n");
+	
+	printf("%lu,%lu,%lu,%lu,%lu,%lu,%lu\n", rate, total_count/duration, median, p90, p95, p99, p99dot9);
 	// close the file
 	fclose(fp);
 }

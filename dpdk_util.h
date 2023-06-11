@@ -34,6 +34,8 @@ extern uint64_t TICKS_PER_US;
 extern struct rte_ring *rx_rings[RTE_MAX_LCORE];
 extern struct rte_mempool *pktmbuf_pool;
 extern tcp_control_block_t *tcp_control_blocks;
+extern uint64_t num_acks;
+extern uint64_t skipped_tx;
 
 void clean_hugepages();
 void print_DPDK_stats();

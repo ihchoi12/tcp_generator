@@ -21,7 +21,8 @@ uint16_t nr_servers;
 uint32_t min_lcores;
 uint32_t frame_size;
 uint32_t tcp_payload_size;
-
+uint64_t num_acks;
+uint64_t skipped_tx;
 // General variables
 uint64_t TICKS_PER_US;
 uint16_t **flow_indexes_array;
@@ -75,6 +76,8 @@ int process_rx_pkt(struct rte_mbuf *pkt, node_t *incoming, uint64_t *incoming_id
 
 	// do not process empty packets
 	if(unlikely(packet_data_size == 0)) {
+		// printf("EMPTY\n");
+		num_acks+=1;
 		return 0;
 	}
 
@@ -289,6 +292,7 @@ static int lcore_tx(void *arg) {
 		if(unlikely(rte_rdtsc() > (next_tsc + 5*TICKS_PER_US))) {
 			// count this batch as dropped
 			nr_never_sent++;
+			skipped_tx++;
 			next_tsc += interarrival_gap[i++];
 			continue;
 		}
@@ -317,6 +321,8 @@ static int lcore_tx(void *arg) {
 
 // main function
 int main(int argc, char **argv) {
+	num_acks=0;
+	skipped_tx=0;
 	// init EAL
 	int ret = rte_eal_init(argc, argv);
 	if(ret < 0) {
@@ -380,12 +386,15 @@ int main(int argc, char **argv) {
 			return -1;
 		}
 	}
+	
+	// print DPDK stats
+	print_dpdk_stats(portid);
+
 
 	// print stats
 	print_stats_output();
 
-	// print DPDK stats
-	print_dpdk_stats(portid);
+	
 
 	// clean up
 	clean_heap();
