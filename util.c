@@ -245,7 +245,7 @@ int cmp_func(const void * a, const void * b) {
 
 // Print stats into output file
 void print_stats_output() {
-	fprintf(stderr,"Print STAT");
+	fprintf(stderr,"\n\n[Print STAT]\n");
 	// open the file
 	FILE *fp = fopen(output_file, "w");
 	if(fp == NULL) {
@@ -294,9 +294,9 @@ void print_stats_output() {
 			p99dot9 = i;
 		}
 	}
-	printf("Rate,Throughput,Median,p90,p95,p99,p99.9\n");
+	printf("#flows,frame_size,#queues,Rate,Throughput,Median,p90,p95,p99,p99.9\n");
 	
-	printf("%lu,%lu,%lu,%lu,%lu,%lu,%lu\n", rate, total_count/duration, median, p90, p95, p99, p99dot9);
+	printf("%lu,%u,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu\n", nr_flows, frame_size, nr_queues, rate, total_count/duration, median, p90, p95, p99, p99dot9);
 	// close the file
 	fclose(fp);
 }
