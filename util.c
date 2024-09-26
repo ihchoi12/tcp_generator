@@ -5,8 +5,8 @@ char output_file[MAXSTRLEN];
 
 // Sample the value using Exponential Distribution
 double sample(double lambda) {
-   	double u = ((double) rte_rand()) / ((uint64_t) -1);
-
+   	// double u = ((double) rte_rand()) / ((uint64_t) -1);
+	double u = ((double) rand()) / RAND_MAX;
 	return -log(1 - u) / lambda;
 }
 
@@ -296,7 +296,7 @@ void print_stats_output() {
 	}
 	printf("#flows,frame_size,#queues,Rate,Throughput,Median,p90,p95,p99,p99.9\n");
 	
-	printf("%lu,%u,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu\n", nr_flows, frame_size, nr_queues, rate, total_count/duration, median, p90, p95, p99, p99dot9);
+	printf("[RESULT]%lu,%u,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu\n", nr_flows, frame_size, nr_queues, rate, total_count/duration, median, p90, p95, p99, p99dot9);
 	// close the file
 	fclose(fp);
 }

@@ -321,6 +321,7 @@ static int lcore_tx(void *arg) {
 
 // main function
 int main(int argc, char **argv) {
+	srand(376672137);  
 	num_acks=0;
 	skipped_tx=0;
 	// init EAL
